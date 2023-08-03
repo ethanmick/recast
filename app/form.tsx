@@ -36,7 +36,10 @@ export function UploadForm() {
         <input
           type="file"
           name="file"
-          onChange={(e) => setFile(e.target.files?.[0])}
+          onChange={(e) => {
+            console.log(e.target.files?.[0])
+            setFile(e.target.files?.[0])
+          }}
         />
         <div>
           <label>To</label>

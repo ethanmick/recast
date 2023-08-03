@@ -34,10 +34,10 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Conversion" (
     "id" TEXT NOT NULL DEFAULT concat('cnv_', replace(cast(gen_random_uuid() as text), '-', '')),
-    "fileLocation" TEXT NOT NULL,
-    "from" TEXT NOT NULL,
-    "to" TEXT NOT NULL,
-    "current" TEXT NOT NULL,
+    "s3Key" TEXT NOT NULL,
+    "fromMime" TEXT NOT NULL,
+    "toMime" TEXT NOT NULL,
+    "currentMime" TEXT NOT NULL,
     "status" "ConversionStatus" NOT NULL,
     "error" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

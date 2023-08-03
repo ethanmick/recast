@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
+import { contentType } from 'mime-types'
 import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream'
 
@@ -43,14 +44,16 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   const s3 = new AWS.S3()
   const downloadParams = {
     Bucket: bucket,
-    Key: conversion.fileLocation.replace(`s3://${bucket}/`, ''),
+    Key: conversion.s3Key,
   }
 
   const stream = Readable.toWeb(s3.getObject(downloadParams).createReadStream())
   return new NextResponse(stream as any, {
     headers: {
-      'Content-Type': `image/${conversion.to}`,
-      'Content-Disposition': `attachment; filename=download.${conversion.to}`,
+      'Content-Type': conversion.toMime,
+      'Content-Disposition': `attachment; filename=download.${contentType(
+        conversion.toMime
+      )}`,
     },
   })
 }

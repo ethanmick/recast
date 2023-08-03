@@ -3,7 +3,6 @@ import { ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
 import { Buffer } from 'buffer'
 import { NextRequest, NextResponse } from 'next/server'
-import { extname } from 'path'
 import { v4 as uuid } from 'uuid'
 
 AWS.config.update({
@@ -18,7 +17,7 @@ export async function POST(req: NextRequest) {
   const data = await req.formData()
   const file: File | null = data.get('file') as unknown as File
   const to = data.get('to') as string
-  const from = extname(file.name).replace('.', '')
+  const from = file.type
 
   if (!file) {
     return new NextResponse(JSON.stringify({ error: 'No file found' }), {
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(bytes)
 
   // upload the file to S3
-  const key = `${uuid()}.${from}`
+  const key = `${uuid()}${uuid}`.replace(/-/g, '')
   const s3 = new AWS.S3()
 
   const params = {
@@ -51,10 +50,10 @@ export async function POST(req: NextRequest) {
   // save the metadata to Postgres
   const conversion = await prisma.conversion.create({
     data: {
-      fileLocation: `s3://${bucket}/${key}`, // uploadResponse.Location
-      from,
-      to,
-      current: from,
+      s3Key: key,
+      fromMime: from,
+      toMime: to,
+      currentMime: from,
       status: ConversionStatus.PENDING,
     },
   })
