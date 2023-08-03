@@ -2,8 +2,8 @@ import { prisma } from '@/lib/prisma'
 import { ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
 import { Buffer } from 'buffer'
+import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
-import { v4 as uuid } from 'uuid'
 
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(bytes)
 
   // upload the file to S3
-  const key = `${uuid()}${uuid}`.replace(/-/g, '')
+  const key = `${randomUUID()}${randomUUID()}`.replace(/-/g, '')
   const s3 = new AWS.S3()
 
   const params = {

@@ -1,6 +1,7 @@
 import { Conversion, ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
 import { randomUUID } from 'crypto'
+import { lookup } from 'mime-types'
 import { prisma } from '../lib/prisma'
 import { PNG_TO_JPG } from './converters/image'
 
@@ -36,7 +37,7 @@ const convert = async (c: Conversion) => {
     data: {
       status: ConversionStatus.DONE,
       s3Key: key,
-      currentMime: 'image/jpg',
+      currentMime: lookup('jpg') as string,
     },
   })
 }

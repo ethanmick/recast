@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
-import { contentType } from 'mime-types'
+import { extension } from 'mime-types'
 import { NextRequest, NextResponse } from 'next/server'
 import { Readable } from 'stream'
 
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   return new NextResponse(stream as any, {
     headers: {
       'Content-Type': conversion.toMime,
-      'Content-Disposition': `attachment; filename=download.${contentType(
+      'Content-Disposition': `attachment; filename=download.${extension(
         conversion.toMime
       )}`,
     },
