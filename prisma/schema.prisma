@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+model Tenant {
+  id               String       @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name             String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  stripeCustomerId String?
+  plan             Plan         @default(FREE)
+  expirationDate   DateTime? // NULL -> means no expiration
+  inviteKey        String       @unique @default(dbgenerated("replace(cast(gen_random_uuid() as text), '-', '')")) @db.Text
+  users            User[]
+  conversions      Conversion[]
+}
+
+model User {
+  id          String       @id @default(dbgenerated("concat('usr_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  email       String       @unique
+  name        String?
+  avatar      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tenantId    String
+  tenant      Tenant       @relation(fields: [tenantId], references: [id])
+  conversions Conversion[]
+}
+
+enum ConversionStatus {
+  PENDING
+  PROCESSING
+  DONE
+  ERROR
+}
+
+model Conversion {
+  id           String           @id @default(dbgenerated("concat('cnv_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  fileLocation String
+  from         String
+  to           String
+  current      String
+  status       ConversionStatus
+  error        String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  tenantId     String?
+  tenant       Tenant?          @relation(fields: [tenantId], references: [id])
+  userId       String?
+  user         User?            @relation(fields: [userId], references: [id])
+}
