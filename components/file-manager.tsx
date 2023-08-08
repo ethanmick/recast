@@ -27,12 +27,12 @@ export const FileManager = ({
         {conversions.map((conversion, key) => (
           <li
             key={key}
-            className="grid grid-cols-[48px_minmax(400px,_1fr)_100px_200px_50px] items-center py-4"
+            className="grid md:grid-cols-[48px_minmax(300px,_1fr)_100px_200px_50px] grid-cols-5 items-center py-4"
           >
             <div className="px-2">
               <FileImageIcon className="w-8 h-8" />
             </div>
-            <div>
+            <div className="md:col-span-1 col-span-3">
               <span className="font-mono bg-neutral-100 rounded p-2">
                 {conversion.file?.name}
               </span>

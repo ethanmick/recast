@@ -55,7 +55,7 @@ export default function Home() {
     <Dropzone onDrop={onDrop}>
       {({ open }) => (
         <>
-          <header className="flex items-center mx-auto container py-2">
+          <header className="flex items-center mx-auto container p-2">
             <Image src="/icon.png" width={64} height={64} alt="Recast Logo" />
             <div className="text-xl font-semibold ml-4">Recast</div>
           </header>

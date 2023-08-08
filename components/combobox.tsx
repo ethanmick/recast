@@ -44,7 +44,7 @@ export function Combobox({ value, setValue }: Props) {
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[180px] justify-between px-2"
+          className="w-[180px] justify-between px-2 md:col-span-1 col-span-4"
         >
           {value
             ? formats.find((format) => format.value === value)?.label
