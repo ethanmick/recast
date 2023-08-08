@@ -1,10 +1,10 @@
 'use client'
 
+import { Dropzone } from '@/components/dropzone'
+import { FileConversion, FileManager } from '@/components/file-manager'
 import { Button } from '@/components/ui/button'
-import { FileConversion, StagedFiles } from '@/components/upload'
 import { fileExtensionToMime } from '@/lib/file'
 import { useCallback, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
 
 type HeroProps = {
   open: () => void
@@ -23,24 +23,9 @@ const Hero = ({ open }: HeroProps) => (
 
 export default function Home() {
   const [conversions, setConversions] = useState<FileConversion[]>([])
-
   const onDrop = useCallback((files: File[]) => {
     setConversions(files.map((file) => ({ file })))
   }, [])
-
-  const {
-    open,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isFocused,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({ onDrop, noClick: true })
-
-  const className = [isDragActive && 'border border-blue-500']
-    .filter(Boolean)
-    .join(' ')
 
   const onSubmit = async () => {
     if (!conversions.length) return
@@ -66,16 +51,24 @@ export default function Home() {
   }
 
   return (
-    <div {...getRootProps({ className })}>
-      <input {...getInputProps()} />
-      <main className="container mx-auto">
-        <Hero open={open} />
-        <StagedFiles
-          conversions={conversions}
-          setConversions={setConversions}
-          onConvert={() => onSubmit()}
-        />
-      </main>
-    </div>
+    <Dropzone onDrop={onDrop}>
+      {({ open }) => (
+        <main className="container mx-auto">
+          <Hero open={open} />
+          {conversions.length > 0 && (
+            <FileManager
+              conversions={conversions}
+              setConversions={setConversions}
+              onConvert={() => onSubmit()}
+            />
+          )}
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            euismod, sapien vel bibendum bibendum, velit sapien bibendum sapien,
+            vel bibendum sapien sapien vel sapien. Sed 0
+          </p>
+        </main>
+      )}
+    </Dropzone>
   )
 }
