@@ -6,8 +6,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Converter',
-  description: 'Convert anything to anything.',
+  title: 'Recast',
+  description: 'Convert any file to anything online. Fast, free, and easy.',
 }
 
 export default function RootLayout({
