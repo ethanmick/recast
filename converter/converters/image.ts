@@ -6,7 +6,17 @@ import { promisify } from 'util'
 import { Converter } from './def'
 const exec = promisify(execAsync)
 
-const formats = ['jpg', 'png', 'gif', 'webp', 'tiff', 'bmp', 'heic', 'heif']
+const formats = [
+  'jpg',
+  'png',
+  'gif',
+  'webp',
+  'tiff',
+  'bmp',
+  'heic',
+  'heif',
+  'ico',
+]
 
 const buildConverter = (from: string, to: string): Converter => {
   const converter: Converter = async (buf) => {
