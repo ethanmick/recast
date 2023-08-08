@@ -4,6 +4,7 @@ import { Dropzone } from '@/components/dropzone'
 import { FileConversion, FileManager } from '@/components/file-manager'
 import { Button } from '@/components/ui/button'
 import { fileExtensionToMime } from '@/lib/file'
+import Image from 'next/image'
 import { useCallback, useState } from 'react'
 
 type HeroProps = {
@@ -53,21 +54,27 @@ export default function Home() {
   return (
     <Dropzone onDrop={onDrop}>
       {({ open }) => (
-        <main className="container mx-auto">
-          <Hero open={open} />
-          {conversions.length > 0 && (
-            <FileManager
-              conversions={conversions}
-              setConversions={setConversions}
-              onConvert={() => onSubmit()}
-            />
-          )}
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            euismod, sapien vel bibendum bibendum, velit sapien bibendum sapien,
-            vel bibendum sapien sapien vel sapien. Sed 0
-          </p>
-        </main>
+        <>
+          <header className="flex items-center mx-auto container py-2">
+            <Image src="/icon.png" width={64} height={64} alt="Recast Logo" />
+            <div className="text-xl font-semibold ml-4">Recast</div>
+          </header>
+          <main className="container mx-auto">
+            <Hero open={open} />
+            {conversions.length > 0 && (
+              <FileManager
+                conversions={conversions}
+                setConversions={setConversions}
+                onConvert={() => onSubmit()}
+              />
+            )}
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+              euismod, sapien vel bibendum bibendum, velit sapien bibendum
+              sapien, vel bibendum sapien sapien vel sapien. Sed 0
+            </p>
+          </main>
+        </>
       )}
     </Dropzone>
   )
