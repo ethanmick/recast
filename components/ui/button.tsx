@@ -76,6 +76,15 @@ const variants = cva(
           'data-[focus-visible=true]:ring-gray-500/30',
           'data-[focus-visible=true]:ring-1',
         ],
+        icon: [
+          'p-0',
+          'font-light',
+          'text-gray-950',
+          'data-[hovered=true]:text-gray-600',
+          'disabled:text-gray-950',
+          'data-[focus-visible=true]:ring-gray-500/30',
+          'data-[focus-visible=true]:ring-1',
+        ],
         link: [
           'font-light',
           'text-emerald-500',
@@ -93,6 +102,23 @@ const variants = cva(
         large: ['text-lg', 'py-3', 'px-12'],
       },
     },
+    compoundVariants: [
+      {
+        variant: 'icon',
+        size: 'small',
+        className: ['p-1'],
+      },
+      {
+        variant: 'icon',
+        size: 'default',
+        className: ['p-2'],
+      },
+      {
+        variant: 'icon',
+        size: 'large',
+        className: ['p-4'],
+      },
+    ],
     defaultVariants: {
       variant: 'primary',
       size: 'default',
@@ -107,6 +133,7 @@ const loading = cva(['absolute', 'inline-flex', 'items-center'], {
       secondary: ['fill-gray-950'],
       destructive: ['fill-white'],
       ghost: ['fill-gray-950'],
+      icon: ['fill-gray-950'],
       link: ['fill-emerald-500'],
     },
   },

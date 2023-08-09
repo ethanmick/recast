@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Button from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Conversion } from './provider'
+import { Selector } from './selector'
 
 type ConversionListItemProps = {
   conversion: Conversion
@@ -12,18 +13,19 @@ type ConversionListItemProps = {
 }
 
 export const ConversionListItem = ({
-  conversion: { file, id },
+  conversion,
   onConvertTo,
   onRemove,
 }: ConversionListItemProps) => {
+  const { file, to } = conversion
   return (
-    <li className="grid md:grid-cols-[48px_1fr_100px_200px_50px] grid-cols-5 items-center py-4">
+    <li className="grid md:grid-cols-[48px_1fr_100px_200px_50px] grid-cols-[48px_1fr_50px_50px] items-center py-4">
       <div className="px-2">
         <Image src="/png.png" width={32} height={32} alt="PNG" />
       </div>
-      <div className="md:col-span-1 col-span-2 flex flex-col">
+      <div className="md:col-span-1 col-span-1 flex flex-col">
         <span className="">{file.name}</span>
-        <span className="px-2 text-xs text-neutral-500">
+        <span className="text-xs text-neutral-500">
           {bytesToSize(file.size || 0)}
         </span>
       </div>
@@ -31,7 +33,9 @@ export const ConversionListItem = ({
       <div>
         <Popover>
           <PopoverTrigger>JPG</PopoverTrigger>
-          <PopoverContent>Place content for the popover here.</PopoverContent>
+          <PopoverContent>
+            <Selector value={conversion.to || ''} setValue={onConvertTo} />
+          </PopoverContent>
         </Popover>
       </div>
       {/* {!conversion.resultId && (
@@ -52,7 +56,7 @@ export const ConversionListItem = ({
           </>
         )} */}
       <div>
-        <Button variant="ghost" onClick={onRemove}>
+        <Button variant="icon" onClick={onRemove}>
           <XIcon className="w-4 h-4" />
         </Button>
       </div>

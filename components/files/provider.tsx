@@ -14,6 +14,7 @@ import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
 export type Conversion = {
   id?: string
   file: File
+  to?: string
   status: ConversionStatus
   upload?: number
 }
