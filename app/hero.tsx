@@ -108,8 +108,6 @@ const Circle = ({ fill }: CircleProps) => {
     [data]
   )
 
-  // console.log('Data', data)
-
   return <Graphics draw={draw} />
 }
 
@@ -117,11 +115,6 @@ const Resizer = () => {
   const app = useApp()
 
   function resize() {
-    console.log(
-      'FUCK',
-
-      document.documentElement.clientWidth || 0
-    )
     const vw = Math.max(document.documentElement.clientWidth || 0)
     const vh = Math.max(
       document.documentElement.clientHeight || 0,
@@ -146,7 +139,6 @@ const Resizer = () => {
 const filter = new KawaseBlurFilter(30, 10, true)
 
 export default function HeroBackground() {
-  console.log('Window Screen', width(), height())
   const vw = Math.max(
     document.documentElement.clientWidth || 0,
     window.innerWidth || 0
@@ -155,7 +147,6 @@ export default function HeroBackground() {
     document.documentElement.clientHeight || 0,
     window.innerHeight || 0
   )
-  console.log('wtf', vw, vh)
   return (
     <motion.div
       className="z-[-1] relative"
