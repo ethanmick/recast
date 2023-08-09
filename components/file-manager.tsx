@@ -76,7 +76,9 @@ export const FileManager = ({
             trackGoal('DVXJLASL', 0)
             onConvert(conversions[0])
           }}
-        ></Button>
+        >
+          Convert
+        </Button>
       </div>
     </div>
   )
