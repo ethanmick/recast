@@ -38,8 +38,20 @@ module.exports = {
             'background-position': 'right center',
           },
         },
+        gradient: {
+          '0%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
+          '100%': {
+            'background-position': '0% 50%',
+          },
+        },
       },
       animation: {
+        border: 'gradient 6s ease infinite',
         text: 'text 5s ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',

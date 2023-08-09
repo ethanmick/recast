@@ -1,9 +1,11 @@
+'use client'
+
 import { cn, container } from '@/lib/utils'
 import { useMotionValueEvent, useScroll } from 'framer-motion'
 import { MenuIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Logo } from './logo'
-import { Button } from './ui/button'
+import Button from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 
 export const Header = () => {
@@ -17,7 +19,7 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        'transition sticky top-0 backdrop-blur-md z-50 border-b duraiton-300 flex items-center px-6 py-4',
+        'transition sticky top-0 backdrop-blur-md z-50 border-b duraiton-300 flex items-center px-6 py-2',
         border
       )}
     >

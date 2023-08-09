@@ -1,4 +1,7 @@
-import { DropEvent, FileRejection, useDropzone } from 'react-dropzone'
+'use client'
+
+import { DropEvent, FileRejection } from 'react-dropzone'
+import { useDropzone } from './files/provider'
 
 type Props = {
   onDrop?: <T extends File>(
@@ -6,30 +9,42 @@ type Props = {
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void
-  children?:
-    | React.ReactNode
-    | (({ open }: { open: () => void }) => React.ReactNode)
+  children?: React.ReactNode
 }
 
-export const Dropzone = ({ onDrop, children }: Props) => {
+export const Dropzone = ({ children }: Props) => {
   const {
-    open,
     getRootProps,
     getInputProps,
     isDragActive,
     isFocused,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ onDrop, noClick: true })
-
-  const className = [isDragActive && 'border border-blue-500']
-    .filter(Boolean)
-    .join(' ')
+  } = useDropzone()
 
   return (
-    <div {...getRootProps({ className })}>
+    <div {...getRootProps({})}>
+      {isDragActive && <DragActive />}
       <input {...getInputProps()} />
-      {typeof children === 'function' ? children({ open }) : children}
+      {children}
     </div>
   )
 }
+
+function DragActive() {
+  return (
+    <div className="backdrop-blur-md bg-white/20 fixed inset-0 flex justify-center items-center z-50">
+      <h2 className="text-center font-light text-7xl">Drop Files Anywhere</h2>
+    </div>
+  )
+}
+
+// function DragActive() {
+//   return (
+//     <div className="border-4 after:-z-10 bg-white relative after:content-[''] after:absolute after:top-[-4px] after:left-[-4px] after:h-[calc(100%+8px)] after:w-[calc(100%+8px)] after:bg-[linear-gradient(60deg,#f79533,#f37055,#ef4e7b,#a167ab,#5073b8,#1098ad,#07b39b,#6fba82)] after:[background-size:300%_300%] after:animate-border">
+//       <div className="z-1">
+//         <h2 className="font-thin text-5xl">Drop Files Anywhere</h2>
+//       </div>
+//     </div>
+//   )
+// }

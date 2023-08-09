@@ -64,7 +64,7 @@ const Circle = ({ fill }: CircleProps) => {
         max: vw,
       },
       y: {
-        min: 0,
+        min: 100,
         max: vh,
       },
     }
@@ -118,7 +118,8 @@ const Resizer = () => {
     const vw = Math.max(document.documentElement.clientWidth || 0)
     const vh = Math.max(
       document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
+      window.innerHeight || 0,
+      600 // min height
     )
     app.renderer.resize(vw, vh)
     app.queueResize()
@@ -148,33 +149,35 @@ export default function HeroBackground() {
     window.innerHeight || 0
   )
   return (
-    <motion.div
-      className="z-[-1] relative"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-        transition: {
-          duration: 10,
-        },
-      }}
-    >
-      <Stage
+    <div className="z-[-1] relative">
+      <motion.div
         className="absolute inset-0"
-        options={{
-          // resizeTo: window,
-          backgroundAlpha: 0,
-          antialias: true,
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: 10,
+          },
         }}
       >
-        <Resizer />
-        <Container filters={[filter]}>
-          <Circle fill={0x10b981} />
-          <Circle fill={0x5eead4} />
-          <Circle fill={0x22d3ee} />
-        </Container>
-      </Stage>
-    </motion.div>
+        <Stage
+          className=" inset-0"
+          options={{
+            // resizeTo: window,
+            backgroundAlpha: 0,
+            antialias: true,
+          }}
+        >
+          <Resizer />
+          <Container filters={[filter]}>
+            <Circle fill={0x10b981} />
+            <Circle fill={0x5eead4} />
+            <Circle fill={0x22d3ee} />
+          </Container>
+        </Stage>
+      </motion.div>
+    </div>
   )
 }

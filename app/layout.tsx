@@ -9,6 +9,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Recast — Convert anything to anything',
   description: 'Convert any file to anything online. Fast, free, and easy.',
+  viewport: 'initial-scale=1, viewport-fit=cover',
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({
