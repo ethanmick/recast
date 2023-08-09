@@ -1,4 +1,5 @@
 import { bytesToSize } from '@/lib/file'
+import { trackGoal } from 'fathom-client'
 import { FileImageIcon, XIcon } from 'lucide-react'
 import { Combobox } from './combobox'
 import { DownloadButton } from './download-button'
@@ -37,7 +38,6 @@ export const FileManager = ({
                 {conversion.file?.name}
               </span>
             </div>
-
             <span className="px-2">
               {bytesToSize(conversion.file?.size || 0)}
             </span>
@@ -70,9 +70,13 @@ export const FileManager = ({
         ))}
       </ul>
       <div className="flex justify-end py-2">
-        <Button variant="default" onClick={() => onConvert(conversions[0])}>
-          Convert
-        </Button>
+        <Button
+          variant="default"
+          onClick={() => {
+            trackGoal('DVXJLASL', 0)
+            onConvert(conversions[0])
+          }}
+        ></Button>
       </div>
     </div>
   )
