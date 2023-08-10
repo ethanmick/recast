@@ -23,7 +23,7 @@ export const Dropzone = ({ children }: Props) => {
   } = useDropzone()
 
   return (
-    <div {...getRootProps({})}>
+    <div {...getRootProps({})} className="outline-none">
       {isDragActive && <DragActive />}
       <input {...getInputProps()} />
       {children}

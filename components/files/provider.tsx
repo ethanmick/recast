@@ -29,7 +29,7 @@ export type ConversionContextProps = {
   convert: () => Promise<void>
 }
 
-const FileContext = createContext<ConversionContextProps>(
+const ConversionContext = createContext<ConversionContextProps>(
   {} as unknown as ConversionContextProps
 )
 
@@ -37,8 +37,8 @@ type Props = {
   children: React.ReactNode
 }
 
-export const useConversions = () => useContext(FileContext)
-export const useDropzone = () => useContext(FileContext).dropzone
+export const useConversions = () => useContext(ConversionContext)
+export const useDropzone = () => useContext(ConversionContext).dropzone
 
 export const ConversionProvider = ({ children }: Props) => {
   const router = useRouter()
@@ -90,7 +90,7 @@ export const ConversionProvider = ({ children }: Props) => {
   }
 
   return (
-    <FileContext.Provider
+    <ConversionContext.Provider
       value={{
         convert,
         dropzone,
@@ -101,6 +101,6 @@ export const ConversionProvider = ({ children }: Props) => {
       }}
     >
       {children}
-    </FileContext.Provider>
+    </ConversionContext.Provider>
   )
 }
