@@ -1,3 +1,7 @@
+import { cn } from '@/lib/utils'
+import Button from '../ui/button'
+import TextField from '../ui/text-field'
+
 const formats = [
   { value: 'png', label: 'png' },
   { value: 'webp', label: 'webp' },
@@ -12,14 +16,20 @@ type SelectorProps = {
 export const Selector = ({ value, setValue }: SelectorProps) => {
   return (
     <div>
-      <input placeholder="Search" />
-      <div>
-        <ul>
+      <TextField placeholder="Search" />
+      <div className="py-2">
+        <ul className="grid gap-2 grid-cols-3">
           {formats.map((format) => (
             <li key={format.value}>
-              <button onClick={() => setValue(format.value)}>
+              <Button
+                className={cn({
+                  'bg-emerald-500': value === format.value,
+                })}
+                variant="secondary"
+                onPress={() => setValue(format.value)}
+              >
                 {format.label}
-              </button>
+              </Button>
             </li>
           ))}
         </ul>

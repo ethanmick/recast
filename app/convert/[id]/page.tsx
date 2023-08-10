@@ -1,3 +1,5 @@
+import { Manager } from '@/components/files/manager'
+
 type Props = {
   params: {
     id: string
@@ -5,5 +7,10 @@ type Props = {
 }
 
 export default async function ({ params }: Props) {
-  return <main>Hi</main>
+  return (
+    <main>
+      <h1>Converting</h1>
+      <Manager />
+    </main>
+  )
 }
