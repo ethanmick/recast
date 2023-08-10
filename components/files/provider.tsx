@@ -2,7 +2,6 @@
 
 import { fileExtensionToMime } from '@/lib/file'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
 import {
   Dispatch,
   SetStateAction,
@@ -51,7 +50,6 @@ export const useConversions = () => useContext(ConversionContext)
 export const useDropzone = () => useContext(ConversionContext).dropzone
 
 export const ConversionProvider = ({ children }: Props) => {
-  const router = useRouter()
   const [conversions, setConversions] = useState<Conversion[]>([])
 
   const removeConversion = (index: number) => {
@@ -92,7 +90,6 @@ export const ConversionProvider = ({ children }: Props) => {
 
         const { data } = await axios.postForm('/api/upload', formData, {
           onUploadProgress: ({ progress }) => {
-            console.log('Progress', progress)
             updateConversion(i, { upload: progress })
           },
         })
