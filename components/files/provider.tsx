@@ -95,6 +95,19 @@ export const ConversionProvider = ({ children }: Props) => {
         })
         const { id } = data
         updateConversion(i, { status: UXConversionStatus.Processing, id })
+
+        let done = false
+        do {
+          const { data } = await axios.get(`/api/status/${id}`)
+          done = data.status === 'DONE'
+          updateConversion(i, {
+            status:
+              data.status === 'DONE'
+                ? UXConversionStatus.Complete
+                : UXConversionStatus.Processing,
+          })
+          await new Promise((resolve) => setTimeout(resolve, 1000))
+        } while (!done)
       } catch (err: any) {
         updateConversion(i, { status: UXConversionStatus.Error, error: err })
       }
