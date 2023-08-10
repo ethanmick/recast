@@ -1,4 +1,5 @@
-import { Manager } from '@/components/files/manager'
+import { Header } from '@/components/header'
+import { Conversions } from './conversions'
 
 type Props = {
   params: {
@@ -8,9 +9,12 @@ type Props = {
 
 export default async function ({ params }: Props) {
   return (
-    <main>
-      <h1>Converting</h1>
-      <Manager />
-    </main>
+    <>
+      <Header />
+      <main>
+        <h1>Converting</h1>
+        <Conversions />
+      </main>
+    </>
   )
 }

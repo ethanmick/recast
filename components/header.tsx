@@ -37,7 +37,7 @@ function Mobile() {
     <div className="block md:hidden">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="ghost">
+          <Button variant="icon">
             <MenuIcon className="h-6 w-6" />
           </Button>
         </DialogTrigger>

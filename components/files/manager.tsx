@@ -1,14 +1,12 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
 import Button from '../ui/button'
 import { ConversionListItem } from './conversion-list-item'
 import { convert } from './convert'
 import { useConversions } from './provider'
 
 export const Manager = () => {
-  const router = useRouter()
   const { conversions, updateConversion, removeConversion } = useConversions()
 
   return (

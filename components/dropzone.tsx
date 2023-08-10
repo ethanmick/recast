@@ -33,7 +33,7 @@ export const Dropzone = ({ children }: Props) => {
 
 function DragActive() {
   return (
-    <div className="backdrop-blur-md bg-white/20 fixed inset-0 flex justify-center items-center z-50">
+    <div className="backdrop-blur-md bg-white/20 fixed inset-0 flex justify-center items-center z-[100]">
       <h2 className="text-center font-light text-7xl">Drop Files Anywhere</h2>
     </div>
   )

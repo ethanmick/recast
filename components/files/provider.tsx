@@ -26,6 +26,7 @@ export type ConversionContextProps = {
   setConversions: Dispatch<SetStateAction<Conversion[]>>
   removeConversion: (index: number) => void
   updateConversion: (index: number, conversion: Partial<Conversion>) => void
+  convert: () => Promise<void>
 }
 
 const FileContext = createContext<ConversionContextProps>(
@@ -71,25 +72,27 @@ export const ConversionProvider = ({ children }: Props) => {
   const dropzone = useCreateDropzone({ onDrop, noClick: true })
 
   const convert = async () => {
-    router.push(`/convert/${'id_123'}`)
-
-    // try {
-    //   const formData = new FormData()
-    //   conversions.forEach((conversion) => {
-    //     formData.append('files', conversion.file)
-    //   })
-    //   const res = await fetch('/api/upload', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-    //   if (!res.ok) throw new Error('Failed to upload')
-    //   const data = await res.json()
-    // } catch (err: any) {}
+    for (let i = 0; i < conversions.length; i++) {
+      const c = conversions[i]
+      updateConversion(i, { status: ConversionStatus.PROCESSING })
+      try {
+        const formData = new FormData()
+        formData.append('file', c.file)
+        formData.append('to', c.to || '')
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        })
+        if (!res.ok) throw new Error('Failed to upload')
+        const data = await res.json()
+      } catch (err: any) {}
+    }
   }
 
   return (
     <FileContext.Provider
       value={{
+        convert,
         dropzone,
         conversions,
         setConversions,
