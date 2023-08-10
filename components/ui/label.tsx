@@ -18,5 +18,7 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(({ ...props }, ref) => {
   return <label ref={ref} className={cn(variants({ className }))} {...rest} />
 })
 
+Label.displayName = 'Label'
+
 export default Label
 export type { LabelProps }

@@ -23,5 +23,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return <input ref={ref} className={cn(variants({ className }))} {...rest} />
 })
 
+Input.displayName = 'Input'
+
 export default Input
 export type { InputProps }
