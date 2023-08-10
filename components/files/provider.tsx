@@ -18,6 +18,7 @@ export type Conversion = {
   to?: string
   status: ConversionStatus
   upload?: number
+  error?: any
 }
 
 export type ConversionContextProps = {

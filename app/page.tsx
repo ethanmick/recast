@@ -12,7 +12,7 @@ const HeroBackground = dynamic(() => import('./hero'), {
 type HeroProps = {}
 
 const Hero = ({}: HeroProps) => (
-  <section className="py-32 flex flex-col items-center gap-16">
+  <section className={container('py-32 flex flex-col items-center gap-16')}>
     <h1 className="text-7xl font-bold text-center [text-wrap:balance]">
       Convert any file to{' '}
       <span className="text-transparent bg-clip-text bg-gradient-to-br from-green-500 to-sky-500 animate-text">
@@ -61,7 +61,9 @@ export default function Home() {
           <Header />
           <main>
             <Hero />
-            <Manager />
+            <div className={container()}>
+              <Manager />
+            </div>
             <About />
           </main>
         </>

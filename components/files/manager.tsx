@@ -1,13 +1,32 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import { z } from 'zod'
 import Button from '../ui/button'
 import { ConversionListItem } from './conversion-list-item'
-import { convert } from './convert'
 import { useConversions } from './provider'
+
+const schema = z.array(
+  z.object({
+    to: z.string(),
+  })
+)
 
 export const Manager = () => {
   const { conversions, updateConversion, removeConversion } = useConversions()
+
+  const validate = () => {
+    const result = schema.safeParse(conversions)
+    console.log('Result', result)
+    if (!result.success) {
+      for (const issue of result.error.issues) {
+        updateConversion(issue.path[0], {
+          error: issue.message,
+        })
+        console.log(issue)
+      }
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -40,15 +59,20 @@ export const Manager = () => {
                 key={key}
                 onRemove={() => removeConversion(key)}
                 onConvertTo={(to) => {
-                  updateConversion(key, { to })
+                  updateConversion(key, { to, error: undefined })
                 }}
               />
             ))}
           </ul>
           <div className="flex justify-center">
-            <form action={convert}>
-              <Button type="submit">Convert</Button>
-            </form>
+            <Button
+              onClick={() => {
+                validate()
+              }}
+              type="submit"
+            >
+              Convert
+            </Button>
           </div>
         </motion.div>
       )}
