@@ -1,6 +1,7 @@
 'use client'
 
-import { ConversionStatus } from '@prisma/client'
+import { fileExtensionToMime } from '@/lib/file'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import {
   Dispatch,
@@ -12,11 +13,19 @@ import {
 } from 'react'
 import { DropzoneState, useDropzone as useCreateDropzone } from 'react-dropzone'
 
+export enum UXConversionStatus {
+  Pending,
+  Uploading,
+  Processing,
+  Complete,
+  Error,
+}
+
 export type Conversion = {
   id?: string
   file: File
   to?: string
-  status: ConversionStatus
+  status: UXConversionStatus
   upload?: number
   error?: any
 }
@@ -65,7 +74,7 @@ export const ConversionProvider = ({ children }: Props) => {
       ...conversions,
       ...files.map((file) => ({
         file,
-        status: ConversionStatus.PENDING,
+        status: UXConversionStatus.Pending,
       })),
     ])
   }, [])
@@ -75,18 +84,23 @@ export const ConversionProvider = ({ children }: Props) => {
   const convert = async () => {
     for (let i = 0; i < conversions.length; i++) {
       const c = conversions[i]
-      updateConversion(i, { status: ConversionStatus.PROCESSING })
+      updateConversion(i, { status: UXConversionStatus.Uploading })
       try {
         const formData = new FormData()
         formData.append('file', c.file)
-        formData.append('to', c.to || '')
-        const res = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
+        formData.append('to', fileExtensionToMime(c.to || '') as string)
+
+        const { data } = await axios.postForm('/api/upload', formData, {
+          onUploadProgress: ({ progress }) => {
+            console.log('Progress', progress)
+            updateConversion(i, { upload: progress })
+          },
         })
-        if (!res.ok) throw new Error('Failed to upload')
-        const data = await res.json()
-      } catch (err: any) {}
+        const { id } = data
+        updateConversion(i, { status: UXConversionStatus.Processing, id })
+      } catch (err: any) {
+        updateConversion(i, { status: UXConversionStatus.Error, error: err })
+      }
     }
   }
 

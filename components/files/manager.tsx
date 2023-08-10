@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { z } from 'zod'
 import Button from '../ui/button'
 import { ConversionListItem } from './conversion-list-item'
-import { useConversions } from './provider'
+import { UXConversionStatus, useConversions } from './provider'
 
 const schema = z.array(
   z.object({
@@ -13,17 +13,21 @@ const schema = z.array(
 )
 
 export const Manager = () => {
-  const { conversions, updateConversion, removeConversion } = useConversions()
+  const { convert, conversions, updateConversion, removeConversion } =
+    useConversions()
 
   const validate = () => {
     const result = schema.safeParse(conversions)
-    console.log('Result', result)
     if (!result.success) {
       for (const issue of result.error.issues) {
-        updateConversion(issue.path[0] as number, {})
+        updateConversion(issue.path[0] as number, {
+          error: issue.message,
+        })
         console.log(issue)
       }
+      return
     }
+    convert()
   }
 
   return (
@@ -56,18 +60,22 @@ export const Manager = () => {
                 conversion={conversion}
                 key={key}
                 onRemove={() => removeConversion(key)}
+                onUpdate={(c) => updateConversion(key, c)}
                 onConvertTo={(to) => {
                   updateConversion(key, { to })
                 }}
               />
             ))}
           </ul>
-          <div className="flex justify-center">
+          <div className="flex justify-center py-2">
             <Button
-              onClick={() => {
+              onPress={() => {
                 validate()
               }}
               type="submit"
+              disabled={conversions.some(
+                (conversion) => conversion.status != UXConversionStatus.Pending
+              )}
             >
               Convert
             </Button>
