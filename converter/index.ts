@@ -22,6 +22,7 @@ const convert = async (c: Conversion) => {
     }
     console.log(`Downloading File`, downloadParams)
     const res = await s3.getObject(downloadParams).promise()
+    console.log('Converting File', c.fromMime, c.toMime)
 
     const converters = findPath(c.fromMime, c.toMime)
     if (!converters) {

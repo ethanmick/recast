@@ -1,8 +1,20 @@
 import { extension, lookup } from 'mime-types'
 
-export const mimeToFileExtension = (mime: string) => extension(mime)
+const _mimes: Record<string, string> = {
+  'image/vnd.microsoft.icon': 'image/x-icon',
+}
 
-export const fileExtensionToMime = (ext: string) => lookup(ext)
+export const mimeToFileExtension = (mime: string) => {
+  const ext = extension(mime)
+  if (!ext) throw new Error(`Unknown mime type: ${mime}`)
+  return ext
+}
+
+export const fileExtensionToMime = (ext: string) => {
+  const mime = lookup(ext)
+  if (!mime) throw new Error(`Unknown file extension: ${ext}`)
+  return _mimes[mime] || mime
+}
 
 export function bytesToSize(bytes: number): string {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']

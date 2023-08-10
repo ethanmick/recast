@@ -1,6 +1,6 @@
 'use client'
 
-import { fileExtensionToMime } from '@/lib/file'
+import { Format } from '@/lib/types'
 import axios from 'axios'
 import {
   Dispatch,
@@ -23,7 +23,7 @@ export enum UXConversionStatus {
 export type Conversion = {
   id?: string
   file: File
-  to?: string
+  to?: Format
   status: UXConversionStatus
   upload?: number
   error?: any
@@ -86,7 +86,7 @@ export const ConversionProvider = ({ children }: Props) => {
       try {
         const formData = new FormData()
         formData.append('file', c.file)
-        formData.append('to', fileExtensionToMime(c.to || '') as string)
+        formData.append('to', c.to?.mime || '')
 
         const { data } = await axios.postForm('/api/upload', formData, {
           onUploadProgress: ({ progress }) => {

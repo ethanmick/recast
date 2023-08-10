@@ -1,6 +1,7 @@
 'use client'
 
 import { bytesToSize } from '@/lib/file'
+import { Format } from '@/lib/types'
 import { ConversionStatus } from '@prisma/client'
 import { XIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -19,7 +20,7 @@ const fetcher = (...args: Parameters<typeof fetch>) =>
 
 type ConversionListItemProps = {
   conversion: Conversion
-  onConvertTo: (format: string) => void
+  onConvertTo: (format: Format) => void
   onRemove: () => void
   onUpdate: (conversion: Partial<Conversion>) => void
 }
@@ -89,11 +90,14 @@ export const ConversionListItem = ({
                   className="px-2"
                   variant={conversion.error ? 'destructive' : 'secondary'}
                 >
-                  {conversion.to || 'Convert To'}
+                  {conversion.to?.ext || 'Convert To'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent>
-                <Selector value={conversion.to || ''} setValue={onConvertTo} />
+                <Selector
+                  value={conversion.to?.mime || ''}
+                  setValue={onConvertTo}
+                />
               </PopoverContent>
             </Popover>
           </div>
@@ -101,7 +105,7 @@ export const ConversionListItem = ({
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className="px-2" variant="secondary">
-                  {conversion.to || 'Format'}
+                  {conversion.to?.ext || 'Convert To'}
                 </Button>
               </DialogTrigger>
               <DialogContent className="w-[calc(100%-2rem)]">
@@ -109,7 +113,7 @@ export const ConversionListItem = ({
                   Convert to which format?
                 </div>
                 <Selector
-                  value={conversion.to || ''}
+                  value={conversion.to?.mime || ''}
                   setValue={(v) => {
                     onConvertTo(v)
                     setOpen(false)

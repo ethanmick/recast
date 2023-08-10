@@ -1,3 +1,4 @@
+import { fileExtensionToMime } from '@/lib/file'
 import { prisma } from '@/lib/prisma'
 import { ConversionStatus } from '@prisma/client'
 import * as AWS from 'aws-sdk'
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
   const data = await req.formData()
   const file: File | null = data.get('file') as unknown as File
   const to = data.get('to') as string
-  const from = file.type
+  const from = fileExtensionToMime(file.name)
 
   if (!file) {
     return new NextResponse(JSON.stringify({ error: 'No file found' }), {

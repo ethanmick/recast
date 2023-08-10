@@ -8,7 +8,10 @@ import { UXConversionStatus, useConversions } from './provider'
 
 const schema = z.array(
   z.object({
-    to: z.string(),
+    to: z.object({
+      mime: z.string(),
+      ext: z.string(),
+    }),
   })
 )
 
@@ -20,13 +23,14 @@ export const Manager = () => {
     const result = schema.safeParse(conversions)
     if (!result.success) {
       for (const issue of result.error.issues) {
+        console.log(issue)
         updateConversion(issue.path[0] as number, {
           error: issue.message,
         })
-        console.log(issue)
       }
       return
     }
+    console.log('Convert')
     convert()
   }
 

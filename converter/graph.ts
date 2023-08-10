@@ -1,8 +1,8 @@
-import * as rawConverters from './converters'
 import { Converter } from './converters/def'
+import { converters as images } from './converters/image/converters'
 
-const converters = rawConverters as unknown as Record<string, Converter>
-console.log('Converters', converters)
+const converters = [...images]
+
 type Edge = {
   converter: Converter
   from: Node
@@ -15,8 +15,7 @@ type Node = {
 }
 
 const nodes: Record<string, Node> = {}
-Object.keys(converters).forEach((key) => {
-  const converter = converters[key as keyof typeof converters]
+converters.forEach((converter) => {
   nodes[converter.to] = nodes[converter.to] || {
     type: converter.to,
     edges: [],
