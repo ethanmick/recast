@@ -20,9 +20,7 @@ export const Manager = () => {
     console.log('Result', result)
     if (!result.success) {
       for (const issue of result.error.issues) {
-        updateConversion(issue.path[0], {
-          error: issue.message,
-        })
+        updateConversion(issue.path[0] as number, {})
         console.log(issue)
       }
     }
@@ -59,7 +57,7 @@ export const Manager = () => {
                 key={key}
                 onRemove={() => removeConversion(key)}
                 onConvertTo={(to) => {
-                  updateConversion(key, { to, error: undefined })
+                  updateConversion(key, { to })
                 }}
               />
             ))}

@@ -14,7 +14,6 @@ type ConversionListItemProps = {
   conversion: Conversion
   onConvertTo: (format: string) => void
   onRemove: () => void
-  error: any
 }
 
 export const ConversionListItem = ({
