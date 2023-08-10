@@ -51,7 +51,7 @@ export const ConversionListItem = ({
   const { file, to } = conversion
 
   return (
-    <li className="grid md:grid-cols-[48px_1fr_80px_100px_50px] grid-cols-[48px_1fr_80px_50px] items-center py-4">
+    <li className="grid md:grid-cols-[48px_1fr_80px_100px_50px] grid-cols-[48px_1fr_80px_100px_50px] items-center py-4">
       <div className="px-2">
         <Image src="/png.png" width={32} height={32} alt="PNG" />
       </div>
