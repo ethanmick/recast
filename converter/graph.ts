@@ -48,7 +48,7 @@ export function findPath(start: string, end: string) {
     const current = queue.shift()
     console.log('Current', current)
     if (!current) {
-      continue
+      return null
     }
 
     if (current.node.type === end) {
