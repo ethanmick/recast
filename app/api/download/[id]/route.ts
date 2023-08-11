@@ -1,15 +1,8 @@
 import { prisma } from '@/lib/prisma'
+import { s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
-import * as AWS from 'aws-sdk'
 import { extension } from 'mime-types'
 import { NextRequest, NextResponse } from 'next/server'
-import { Readable } from 'stream'
-
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_DEFAULT_REGION,
-})
 
 const bucket = process.env.S3_BUCKET_NAME!
 
@@ -41,13 +34,14 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     )
   }
 
-  const s3 = new AWS.S3()
   const downloadParams = {
     Bucket: bucket,
     Key: conversion.s3Key,
   }
 
-  const stream = Readable.toWeb(s3.getObject(downloadParams).createReadStream())
+  const stream = (
+    await s3.getObject(downloadParams)
+  ).Body?.transformToWebStream()
   return new NextResponse(stream as any, {
     headers: {
       'Content-Type': conversion.toMime,
