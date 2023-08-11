@@ -46,7 +46,7 @@ export function findPath(start: string, end: string) {
 
   while (queue.length > 0) {
     const current = queue.shift()
-    console.log('Current', current)
+    // console.log('Graph: Finding path from', current?.node.type)
     if (!current) {
       return null
     }
