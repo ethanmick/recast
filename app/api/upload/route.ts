@@ -1,16 +1,10 @@
 import { fileExtensionToMime } from '@/lib/file'
 import { prisma } from '@/lib/prisma'
+import { s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
-import * as AWS from 'aws-sdk'
 import { Buffer } from 'buffer'
 import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
-
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_DEFAULT_REGION,
-})
 
 const bucket = process.env.S3_BUCKET_NAME!
 
@@ -37,7 +31,6 @@ export async function POST(req: NextRequest) {
 
   // upload the file to S3
   const key = `${randomUUID()}${randomUUID()}`.replace(/-/g, '')
-  const s3 = new AWS.S3()
 
   const params = {
     Bucket: bucket,
@@ -45,8 +38,8 @@ export async function POST(req: NextRequest) {
     Body: buffer,
   }
 
-  const uploadResponse = await s3.upload(params).promise()
-  console.log(`File uploaded successfully. ${uploadResponse.Location}`)
+  await s3.putObject(params)
+  console.log(`File uploaded successfully.`)
 
   // save the metadata to Postgres
   const conversion = await prisma.conversion.create({
