@@ -62,5 +62,14 @@ console.log('content', chatResponse.data.choices[0].message.content)
 
 const content = chatResponse.data.choices[0].message.content
 const slug = slugify(title, { lower: true, strict: true })
+const date = new Date().toISOString().split('T')[0]
 
-await writeFile(join('blog', `${slug}.mdx`), content, 'utf8')
+await writeFile(path.join('blog', `${slug}.mdx`), content, 'utf8')
+
+return
+
+await cd('blog')
+await $`git checkout -b create-blog-post-${date}`
+await $`git add ${slug}.mdx`
+await $`git commit -m "Add blog post: ${title}"`
+await $`gh pr create --title "Add blog post: ${title}"`
