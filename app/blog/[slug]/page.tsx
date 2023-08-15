@@ -1,17 +1,8 @@
+import { Meta } from '@/lib/blog'
 import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { join } from 'path'
-
-type Meta = {
-  title: string
-  date: string
-  excerpt: string
-  author: {
-    name: string
-    image: string
-  }
-}
 
 type Props = {
   params: { slug: string }
