@@ -38,8 +38,11 @@ const response = await notion.databases.query({
 })
 
 const firstPage = response.results[0]
+if (!firstPage) {
+  console.log('No blog posts to write.')
+  return
+}
 console.log(firstPage)
-console.log('Test', firstPage.properties.Prompt)
 
 const title = firstPage.properties.Name.title[0].plain_text
 const prompt = firstPage.properties.Prompt.rich_text?.[0]?.plain_text
@@ -57,8 +60,6 @@ const chatResponse = await openai.createChatCompletion({
     },
   ],
 })
-
-console.log('content', chatResponse.data.choices[0].message.content)
 
 const content = chatResponse.data.choices[0].message.content
 const slug = slugify(title, { lower: true, strict: true })
@@ -85,6 +86,7 @@ await $`git config user.name "Ethan Mick"`
 await $`git config user.email "ethan@ethanmick.com"`
 await $`git checkout -b create-blog-post-${date}`
 await $`git add ${slug}.mdx`
-await $`git commit -m "Add blog post: ${title}"`
+const commit = `Add blog post: ${title}`
+await $`git commit -m ${commit}`
 await $`git push origin -u create-blog-post-${date}`
-await $`gh pr create --title "Add blog post: ${title}" --fill`
+await $`gh pr create --fill`
