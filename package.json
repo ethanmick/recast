@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.388.0",
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
+    "@next/mdx": "^13.4.16",
     "@nextui-org/button": "^2.0.5",
     "@nextui-org/link": "^2.0.5",
     "@nextui-org/react": "^2.0.8",
@@ -21,6 +24,7 @@
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-types/button": "^3.7.3",
+    "@types/mdx": "^2.0.6",
     "@types/node": "20.4.6",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
