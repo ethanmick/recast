@@ -22,8 +22,8 @@ export default async function () {
   return (
     <>
       <Header />
-      <main className={container('mt-8')}>
-        <h1 className="text-center text-4xl font-bold">Blog</h1>
+      <main className={container('')}>
+        <h1 className="text-center text-4xl font-bold py-8">Blog</h1>
         <ul>
           {posts.map((post) => (
             <li key={post.title} className="py-4">
