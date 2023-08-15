@@ -66,10 +66,9 @@ const date = new Date().toISOString().split('T')[0]
 
 await writeFile(path.join('blog', `${slug}.mdx`), content, 'utf8')
 
-return
-
 await cd('blog')
 await $`git checkout -b create-blog-post-${date}`
 await $`git add ${slug}.mdx`
 await $`git commit -m "Add blog post: ${title}"`
-await $`gh pr create --title "Add blog post: ${title}"`
+await $`git push origin -u create-blog-post-${date}`
+await $`gh pr create --title "Add blog post: ${title}" --fill`
