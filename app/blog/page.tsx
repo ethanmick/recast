@@ -28,9 +28,9 @@ export default async function () {
           {posts.map((post) => (
             <li key={post.title} className="py-4">
               <Link href={`/blog/${post.href}`}>
-                <div>
-                  <div className="text-lg font-semibold">{post.title}</div>
-                  <div>
+                <div className="space-y-2">
+                  <div className="text-4xl font-semibold">{post.title}</div>
+                  <div className="text-sm text-neutral-600">
                     <span className="font-semibold">{post.author.name}</span>
                     {' - '}
                     {post.date.toLocaleDateString(undefined, {
@@ -39,6 +39,7 @@ export default async function () {
                       day: 'numeric',
                     })}
                   </div>
+                  <div className="py-text-neutral-700">{post.excerpt}</div>
                 </div>
               </Link>
             </li>
