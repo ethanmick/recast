@@ -24,6 +24,7 @@
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-types/button": "^3.7.3",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/mdx": "^2.0.6",
     "@types/node": "20.4.6",
     "@types/react": "18.2.18",
