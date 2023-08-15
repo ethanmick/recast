@@ -64,7 +64,21 @@ const content = chatResponse.data.choices[0].message.content
 const slug = slugify(title, { lower: true, strict: true })
 const date = new Date().toISOString().split('T')[0]
 
-await writeFile(path.join('blog', `${slug}.mdx`), content, 'utf8')
+const meta = `export const meta = {
+  title: '${title}',
+  date: '${date}',
+  excerpt: '',
+  author: {
+    name: 'Ethan Mick',
+    image: '/em.png',
+  },
+}`
+
+const data = `${meta}
+
+${content}`
+
+await writeFile(path.join('blog', `${slug}.mdx`), data, 'utf8')
 
 await cd('blog')
 await $`git config user.name "Ethan Mick"`
