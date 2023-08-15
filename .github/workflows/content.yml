@@ -1,0 +1,14 @@
+name: Content Generation
+
+on:
+  schedule:
+    - cron: '0 6 * * 1,3,5'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run script
+        run: npx zx ./bin/content.mjs
