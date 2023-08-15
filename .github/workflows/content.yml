@@ -13,3 +13,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run script
         run: npx zx --install ./.bin/content.mjs
+        env:
+          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
+          OPENAI_API_TOKEN: ${{ secrets.OPENAI_API_TOKEN }}
