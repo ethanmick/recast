@@ -1,0 +1,49 @@
+export const meta = {
+  title: 'How to convert a PNG to JPG with ImageMagick',
+  date: '2023-08-15',
+  excerpt: '',
+  author: {
+    name: 'Ethan Mick',
+    image: '/em.png',
+  },
+}
+
+When dealing with images, format conversion can oftentimes be a necessity. Whether you're seeking to save disk space or you need a specific format for a particular task, understanding how to convert an image from one format to another can be a massive time saver. Today, we'll be looking at how to convert a PNG image into a JPG using a powerful tool known as ImageMagick.
+
+ImageMagick is a free and open-source software suite that's used to create, edit, and manage images. It can read and write over 100 image formats such as PNG, JPEG, JPEG-2000, GIF, TIFF, DPX, EXR, SVG, etc. Making it a handy tool for image manipulation tasks.
+
+# Step by Step Guide to Convert PNG to JPEG using ImageMagick
+
+## Step 1: Installation
+
+Before you can begin converting your image files, you'll need to install ImageMagick on your system. It's available for Windows, macOS, Linux, and other systems.
+
+* For Windows, head over to the ImageMagick [download page](https://imagemagick.org/script/download.php#windows) and get the binary release for your system.
+* Mac users can install ImageMagick using [Homebrew](https://brew.sh/): simply type `brew install imagemagick` in your Terminal.
+* Linux users, similarly, can install it from a Terminal with `sudo apt-get install imagemagick`.
+
+## Step 2: Conversion 
+
+Once installed, converting an image from PNG to JPEG format is straightforward. Navigate to the folder where your image file is located in a Terminal or Command Prompt window, then type the following command:
+
+```
+convert input.png output.jpg
+```
+
+In this command, `input.png` is the name of the PNG file you want to convert, and `output.jpg` is the name of the JPG file you want to create.
+
+When you run this command, ImageMagick will automatically convert the PNG image to JPEG. By default, it produces a high-quality JPEG image. 
+
+## Step 3: Adjusting Compression (Optional)
+
+If you'd like to adjust the quality of the output JPEG, you can do so by adding a `-quality` parameter. The value can range from 1 (lowest image quality and highest compression) to 100 (best quality but least effective compression). 
+
+Here's the command:
+
+```
+convert input.png -quality 80 output.jpg
+```
+
+In this case, the output JPEG image will have 80% of the original's quality.
+
+That's it! ImageMagick is a powerful tool that can meet all your image conversion needs, but it's also quite simple to use. The above guide is all you need to convert a PNG to a JPEG. The same principles can be applied to convert images to and from other formats. Just replace `.png` or `.jpg` in the above command with your required format. Happy converting!
