@@ -69,6 +69,7 @@ const meta = `export const meta = {
   title: '${title}',
   date: '${date}',
   excerpt: '',
+  image: '/api/og?title=${title}&author=Ethan Mick',
   author: {
     name: 'Ethan Mick',
     image: '/em.png',

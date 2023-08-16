@@ -2,18 +2,20 @@ import { Header } from '@/components/header'
 import { Meta } from '@/lib/blog'
 import { container } from '@/lib/utils'
 import { readdir } from 'fs/promises'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { join } from 'path/posix'
 import { ReactNode } from 'react'
-import { Title } from './title'
+
+const Title = dynamic(() => import('./title'), { ssr: false })
 
 type Post = Meta & {
   date: Date
   href: string
 }
 
-export const BlogCard = ({ post }: { post: Post }) => {
+const BlogCard = ({ post }: { post: Post }) => {
   return (
     <li>
       <Link
@@ -30,17 +32,17 @@ export const BlogCard = ({ post }: { post: Post }) => {
           />
         </div>
         <div>
-          <div className="text-neutral-900 group-hover:text-neutral-800">
+          <div className="text-neutral-900 group-hover:text-neutral-600">
             {post.date.toLocaleDateString(undefined, {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
             })}
           </div>
-          <h3 className="my-4 text-3xl text-neutral-900 group-hover:text-neutral-800">
+          <h3 className="my-4 text-3xl text-neutral-900 group-hover:text-neutral-600">
             {post.title}
           </h3>
-          <p className="text-neutral-800 group-hover:text-neutral-700">
+          <p className="text-neutral-800 group-hover:text-neutral-600">
             {post.excerpt}
           </p>
         </div>
