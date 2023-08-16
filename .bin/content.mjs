@@ -40,7 +40,7 @@ const response = await notion.databases.query({
 const firstPage = response.results[0]
 if (!firstPage) {
   console.log('No blog posts to write.')
-  return
+  process.exit()
 }
 console.log(firstPage)
 
