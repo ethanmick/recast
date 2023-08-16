@@ -9,7 +9,6 @@ type Props = {
 }
 
 export default async function ({ params }: Props) {
-  console.log('Params', params)
   const { meta }: { meta: Meta } = require(`../../../blog/${params.slug}.mdx`)
   const Content = dynamic(() => import(`../../../blog/${params.slug}.mdx`))
   return (
