@@ -1,6 +1,6 @@
 import { Meta } from '@/lib/blog'
 import { readdir } from 'fs/promises'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { join } from 'path'
@@ -9,19 +9,16 @@ type Props = {
   params: { slug: string }
 }
 
-export async function generateMetadata(
-  { params }: Props,
-  parent?: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { meta }: { meta: Meta } = require(`../../../blog/${params.slug}.mdx`)
   return {
     title: meta.title,
     description: meta.excerpt,
     openGraph: {
-      images: [meta.image],
       type: 'website',
       description: meta.excerpt,
-      url: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/blog/${params.slug}}`,
+      images: [meta.image],
+      url: `https://recastfile.com/blog/${params.slug}`,
     },
     twitter: {
       card: 'summary_large_image',
