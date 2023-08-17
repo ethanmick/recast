@@ -38,7 +38,7 @@ export const Manager = () => {
     <AnimatePresence>
       {conversions.length > 0 && (
         <motion.div
-          className="bg-white/80 backdrop-blur-md rounded-lg m-2"
+          className="bg-white/80 backdrop-blur-md rounded-lg m-2 md:px-2"
           initial={{
             opacity: 0,
             transform: 'translateY(50px)',

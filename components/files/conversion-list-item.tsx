@@ -69,7 +69,7 @@ export const ConversionListItem = ({
       )}
       {conversion.status === UXConversionStatus.Uploading && (
         <Badge className="text-sky-500 border-sky-500">
-          Uploading: {(conversion.upload || 0) * 100}%
+          {(conversion.upload || 0) * 100}%
         </Badge>
       )}
       {conversion.status === UXConversionStatus.Processing && (
