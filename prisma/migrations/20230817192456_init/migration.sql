@@ -34,11 +34,8 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Conversion" (
     "id" TEXT NOT NULL DEFAULT concat('cnv_', replace(cast(gen_random_uuid() as text), '-', '')),
-    "s3Key" TEXT NOT NULL,
-    "fromMime" TEXT NOT NULL,
-    "toMime" TEXT NOT NULL,
-    "currentMime" TEXT NOT NULL,
     "status" "ConversionStatus" NOT NULL,
+    "currentStage" INTEGER NOT NULL,
     "error" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -46,6 +43,29 @@ CREATE TABLE "Conversion" (
     "userId" TEXT,
 
     CONSTRAINT "Conversion_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Stage" (
+    "id" TEXT NOT NULL DEFAULT concat('stg_', replace(cast(gen_random_uuid() as text), '-', '')),
+    "mime" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "conversionId" TEXT NOT NULL,
+
+    CONSTRAINT "Stage_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Artifact" (
+    "id" TEXT NOT NULL DEFAULT concat('art_', replace(cast(gen_random_uuid() as text), '-', '')),
+    "order" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "stageId" TEXT NOT NULL,
+
+    CONSTRAINT "Artifact_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -62,3 +82,9 @@ ALTER TABLE "Conversion" ADD CONSTRAINT "Conversion_tenantId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Conversion" ADD CONSTRAINT "Conversion_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Stage" ADD CONSTRAINT "Stage_conversionId_fkey" FOREIGN KEY ("conversionId") REFERENCES "Conversion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Artifact" ADD CONSTRAINT "Artifact_stageId_fkey" FOREIGN KEY ("stageId") REFERENCES "Stage"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,4 +1,5 @@
 import { S3 } from '@aws-sdk/client-s3'
+import { Artifact, Conversion } from '@prisma/client'
 
 export const s3 = new S3({
   credentials: {
@@ -7,3 +8,6 @@ export const s3 = new S3({
   },
   region: process.env.AWS_DEFAULT_REGION,
 })
+
+export const key = (c: Conversion, n: number, a: Artifact) =>
+  `/${c.id}/${n}/${a.id}`

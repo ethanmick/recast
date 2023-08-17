@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { s3 } from '@/lib/s3'
+import { key, s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
 import { extension } from 'mime-types'
 import { NextRequest, NextResponse } from 'next/server'
@@ -16,6 +16,13 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   const conversion = await prisma.conversion.findUnique({
     where: {
       id: params.id,
+    },
+    include: {
+      stages: {
+        include: {
+          artifacts: true,
+        },
+      },
     },
   })
   if (!conversion) {
@@ -36,7 +43,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
   const downloadParams = {
     Bucket: bucket,
-    Key: conversion.s3Key,
+    Key: key(conversion, 1, conversion.stages[1].artifacts[0]),
   }
 
   const stream = (
@@ -44,9 +51,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   ).Body?.transformToWebStream()
   return new NextResponse(stream as any, {
     headers: {
-      'Content-Type': conversion.toMime,
+      'Content-Type': conversion.stages[1].mime,
       'Content-Disposition': `attachment; filename=download.${extension(
-        conversion.toMime
+        conversion.stages[1].mime
       )}`,
     },
   })

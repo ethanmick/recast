@@ -12,15 +12,16 @@ const buildConverter = (
   to: string,
   params?: string
 ): Converter => {
-  const converter: Converter = async (buf) => {
+  const converter: Converter = async (bufs: Buffer[]) => {
     const file = randomUUID()
-    await writeFile(`/tmp/${file}.${extension(from)}`, buf)
+    await writeFile(`/tmp/${file}.${extension(from)}`, bufs[0])
     await exec(
       `convert /tmp/${file}.${extension(from)} ${
         params ?? ''
       } /tmp/${file}.${extension(to)}`
     )
-    return readFile(`/tmp/${file}.${extension(to)}`)
+    const data = await readFile(`/tmp/${file}.${extension(to)}`)
+    return [data]
   }
   converter.from = from
   converter.to = to

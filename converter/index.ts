@@ -1,33 +1,40 @@
-import { Conversion, ConversionStatus } from '@prisma/client'
-import { randomUUID } from 'crypto'
+import { Artifact, Conversion, ConversionStatus, Stage } from '@prisma/client'
 import { prisma } from '../lib/prisma'
-import { s3 } from '../lib/s3'
+import { key, s3 } from '../lib/s3'
 import { findPath } from './graph'
 
 const bucket = process.env.S3_BUCKET_NAME!
 
-const convert = async (c: Conversion) => {
+type ConversionWithStagesWithArtifacts = Conversion & {
+  stages: (Stage & {
+    artifacts: Artifact[]
+  })[]
+}
+
+const convert = async (c: ConversionWithStagesWithArtifacts) => {
   console.log(`Starting conversion ${c.id}`)
   try {
     const downloadParams = {
       Bucket: bucket,
-      Key: c.s3Key,
+      Key: key(c, 0, c.stages[0].artifacts[0]),
     }
+
+    const [current, next] = c.stages
     console.log(`Downloading File`, downloadParams.Key)
     const res = await s3.getObject(downloadParams)
-    console.log(`Starting conversion: ${c.fromMime} => ${c.toMime}`)
+    console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
 
-    const converters = findPath(c.fromMime, c.toMime)
+    const converters = findPath(current.mime, next.mime)
     if (!converters) {
       console.error(
-        `Could not find converter from ${c.fromMime} to ${c.toMime}`
+        `Could not find converter from ${current.mime} to ${next.mime}`
       )
       await prisma.conversion.update({
         where: {
           id: c.id,
         },
         data: {
-          error: `Could not convert from ${c.fromMime} to ${c.toMime}`,
+          error: `Could not find converter from ${current.mime} to ${next.mime}`,
           status: ConversionStatus.ERROR,
         },
       })
@@ -38,18 +45,24 @@ const convert = async (c: Conversion) => {
     if (!converted) {
       throw new Error('Could not download file')
     }
-    let buf = Buffer.from(converted)
+    let output: Buffer[] = []
     for (const edge of converters) {
       console.log(`Converting to ${edge.to.type}`)
-      buf = await edge.converter(buf)
+      output = await edge.converter([Buffer.from(converted)])
     }
 
-    const key = (randomUUID() + randomUUID()).replace(/-/g, '')
-    console.log(`Uploading to`, key)
+    const artifact = await prisma.artifact.create({
+      data: {
+        order: 0,
+        stageId: next.id,
+      },
+    })
+
+    console.log(`Uploading to`, artifact.id)
     const uploadParams = {
       Bucket: bucket,
-      Key: key,
-      Body: buf,
+      Key: key(c, 1, artifact),
+      Body: output[0],
     }
     await s3.putObject(uploadParams)
     await prisma.conversion.update({
@@ -58,8 +71,6 @@ const convert = async (c: Conversion) => {
       },
       data: {
         status: ConversionStatus.DONE,
-        s3Key: key,
-        currentMime: converters[converters.length - 1].to.type,
       },
     })
   } catch (err: any) {
@@ -79,6 +90,13 @@ const main = async () => {
   const conversions = await prisma.conversion.findMany({
     where: {
       status: ConversionStatus.PENDING,
+    },
+    include: {
+      stages: {
+        include: {
+          artifacts: true,
+        },
+      },
     },
   })
   console.log(`Found ${conversions.length} conversions`)

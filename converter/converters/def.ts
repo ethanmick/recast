@@ -1,5 +1,5 @@
 export interface Converter {
-  (buf: Buffer): Promise<Buffer>
+  (buffers: Buffer[]): Promise<Buffer[]>
   from: string
   to: string
 }
