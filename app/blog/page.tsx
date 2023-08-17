@@ -24,9 +24,9 @@ const BlogCard = ({ post }: { post: Post }) => {
       >
         <div className="w-full h-[300px] relative overflow-hidden rounded-2xl z-0">
           <Image
+            className="w-full z-0 group-hover:scale-105 transition-transform [transition-duration:500ms]"
             unoptimized
             src={post.image}
-            className="w-full z-0"
             fill
             objectFit="cover"
             alt={post.title}
