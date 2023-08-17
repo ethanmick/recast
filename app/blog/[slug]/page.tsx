@@ -11,13 +11,16 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { meta }: { meta: Meta } = require(`../../../blog/${params.slug}.mdx`)
+  const title = `${meta.title} - Recast`
+  const image = `https://recastfile.com${meta.image}`
   return {
-    title: meta.title,
+    title: title,
     description: meta.excerpt,
     openGraph: {
+      title: title,
       type: 'website',
       description: meta.excerpt,
-      images: [meta.image],
+      images: [image],
       url: `https://recastfile.com/blog/${params.slug}`,
     },
     twitter: {
