@@ -1,21 +1,14 @@
 import { Header } from '@/components/header'
-import { Meta } from '@/lib/blog'
+import { Post, getBlogPosts } from '@/lib/blog'
 import { container } from '@/lib/utils'
-import { readdir } from 'fs/promises'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { join } from 'path/posix'
 import { ReactNode } from 'react'
 
 const Title = dynamic(() => import('./title'), {
   ssr: false,
 })
-
-type Post = Meta & {
-  date: Date
-  href: string
-}
 
 const BlogCard = ({ post }: { post: Post }) => {
   return (
@@ -63,17 +56,7 @@ const grid = () => {
 }
 
 export default async function () {
-  const posts: Post[] = (await readdir(join(process.cwd() + '/blog')))
-    .map((file) => {
-      const { meta }: { meta: Meta } = require(`../../blog/${file}`)
-      return {
-        ...meta,
-        date: new Date(meta.date),
-        href: file.replace(/\.mdx$/, ''),
-      } as Post
-    })
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-
+  const posts = await getBlogPosts()
   const [header, ...rest] = posts
 
   return (

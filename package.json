@@ -38,6 +38,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "fathom-client": "^3.5.0",
+    "feed": "^4.2.2",
     "framer-motion": "^10.15.1",
     "gm": "^1.25.0",
     "lucide-react": "^0.265.0",
