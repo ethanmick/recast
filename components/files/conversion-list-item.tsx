@@ -52,12 +52,14 @@ export const ConversionListItem = ({
   const { file, to } = conversion
 
   return (
-    <li className="grid md:grid-cols-[48px_1fr_80px_100px_50px] grid-cols-[48px_1fr_80px_100px_50px] items-center py-4">
-      <div className="px-2">
+    <li className="grid md:grid-cols-[32px_minmax(0,1fr)_80px_100px_32px] grid-cols-[32px_minmax(0,max-content)_80px_67px_32px] items-center py-4 gap-2">
+      <div className="">
         <Image src="/png.png" width={32} height={32} alt="PNG" />
       </div>
       <div className="md:col-span-1 col-span-1 flex flex-col">
-        <span className="">{file.name}</span>
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          {file.name}
+        </span>
         <span className="text-xs text-neutral-500">
           {bytesToSize(file.size || 0)}
         </span>
@@ -104,8 +106,8 @@ export const ConversionListItem = ({
           <div className="md:hidden">
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <Button className="px-2" variant="secondary">
-                  {conversion.to?.ext || 'Convert To'}
+                <Button size="small" className="px-2" variant="secondary">
+                  {conversion.to?.ext || 'Format'}
                 </Button>
               </DialogTrigger>
               <DialogContent className="w-[calc(100%-2rem)]">
