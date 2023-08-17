@@ -8,7 +8,9 @@ import Link from 'next/link'
 import { join } from 'path/posix'
 import { ReactNode } from 'react'
 
-const Title = dynamic(() => import('./title'), { ssr: false })
+const Title = dynamic(() => import('./title'), {
+  ssr: false,
+})
 
 type Post = Meta & {
   date: Date
@@ -72,15 +74,13 @@ export default async function () {
     })
     .sort((a, b) => b.date.getTime() - a.date.getTime())
 
-  console.log(posts)
-
   const [header, ...rest] = posts
 
   return (
     <>
       <Header />
       <Title />
-      <main className={container('space-y-[5rem]')}>
+      <main className={container('space-y-[5rem] px-4')}>
         <ul className="grid gap-8 grid-cols-1">
           {[header].map((post) => (
             <BlogCard key={post.title} post={post} />

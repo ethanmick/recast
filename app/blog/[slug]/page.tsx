@@ -50,16 +50,16 @@ const BlogHeader = ({ meta }: { meta: Meta }) => (
         <div>{meta.author.name}</div>
       </div>
     </div>
-    <div className="w-full h-[500px] relative overflow-hidden rounded-2xl z-0">
-      <Image
-        className="w-full z-0 group-hover:scale-105 transition-transform [transition-duration:500ms]"
-        unoptimized
-        src={meta.image}
-        fill
-        objectFit="cover"
-        alt={meta.title}
-      />
-    </div>
+    <Image
+      width={0}
+      height={0}
+      sizes="100vw"
+      className="rounded-2xl"
+      style={{ width: '100%', height: 'auto' }} // optional
+      src={meta.image}
+      unoptimized
+      alt={meta.title}
+    />
   </header>
 )
 
