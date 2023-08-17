@@ -1,0 +1,42 @@
+export const meta = {
+  title: 'How to install FFMPEG on macOS',
+  date: '2023-08-16',
+  excerpt:
+    'Discover a step-by-step guide to seamlessly install the versatile video processing tool, FFMPEG, on your macOS using Homebrew.',
+  image:
+    '/api/og?title=How%20to%20install%20FFMPEG%20on%20macOS&author=Ethan%20Mick',
+  author: {
+    name: 'Ethan Mick',
+    image: '/em.png',
+  },
+}
+
+When it comes to video processing tasks, FFMPEG is a crucial tool for developers. From video and audio file conversion, streaming audio and video from online, to recording screen while capturing microphone input, the capabilities of FFMPEG are vast. However, the installation process of FFMPEG on macOS can be a bit tricky. Today, we are going to walk you step by step through this process.
+
+Firstly, if you haven't already done so, you need to install Homebrew. Homebrew is a package manager for macOS that simplifies the process of installing software on macOS.
+
+To install Homebrew, open the Terminal app (which you can find in Applications > Utilities), then copy & paste the following command:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Press RETURN/ENTER and follow the instructions in Terminal.
+
+Once you have Homebrew installed, you can then move on to installing FFMPEG. In your Terminal window, enter the following command:
+
+```bash
+brew install ffmpeg
+```
+
+After entering this command, Homebrew will start the process of installing FFMPEG. This process includes installing any dependencies FFMPEG needs to run.
+
+Once the installation is complete, you can check that it was installed correctly by entering the following command into the Terminal window:
+
+```bash
+ffmpeg -version
+```
+
+If installed correctly, Terminal should print out the version of FFMPEG that was installed.
+
+So there you have it, a simple guide to installing FFMPEG on MacOS! FFMPEG is an incredibly powerful tool that is well worth incorporating into your video processing tasks. Now that it's installed on your system, why not start exploring all the ways FFMPEG can aid in your video and audio processing needs?

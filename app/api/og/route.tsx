@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
         }}
       >
         <img
-          src="http://localhost:3000/blog-cover-1.png"
+          src="https://recastfile.com/blog-cover-1.png"
           style={{
             position: 'absolute',
             width: 1200,
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
           }}
         >
           <img
-            src="http://localhost:3000/logo.png"
+            src="https://recastfile.com/logo.png"
             style={{
               width: 50,
               height: 50,
