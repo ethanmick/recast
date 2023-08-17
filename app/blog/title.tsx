@@ -19,7 +19,7 @@ export default function DynamicTitle() {
   const y = useTransform(scrollY, [0, 200], [70, 0])
   const x = useTransform(scrollY, [0, 200], [0, 0])
   return (
-    <div className="h-[240px] sticky top-[65px] text-xl z-20 overflow-x-hidden">
+    <div className="h-[240px] sticky top-[64px] text-xl z-20 overflow-x-hidden">
       <div className="bg-white/60 backdrop-blur-md">
         <div className={container('py-2')}>
           <motion.h1
@@ -40,7 +40,7 @@ export default function DynamicTitle() {
 
 export function Title() {
   return (
-    <div className="sticky top-[65px] text-xl z-20">
+    <div className="sticky top-[64px] text-xl z-20">
       <div className="bg-white/60 backdrop-blur-md">
         <div className={container('py-2')}>
           <Link href="/blog">

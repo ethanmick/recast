@@ -1,4 +1,3 @@
-import { Header } from '@/components/header'
 import { Post, getBlogPosts } from '@/lib/blog'
 import { container } from '@/lib/utils'
 import dynamic from 'next/dynamic'
@@ -61,7 +60,6 @@ export default async function () {
 
   return (
     <>
-      <Header />
       <Title />
       <main className={container('space-y-[5rem] px-4')}>
         <ul className="grid gap-8 grid-cols-1">
@@ -74,14 +72,6 @@ export default async function () {
             <BlogCard key={post.title} post={post} />
           ))}
         </ul>
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
-        <div className="h-24" />
       </main>
     </>
   )

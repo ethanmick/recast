@@ -1,5 +1,6 @@
 import { Dropzone } from '@/components/dropzone'
 import { Manager } from '@/components/files/manager'
+import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { container } from '@/lib/utils'
 import dynamic from 'next/dynamic'
@@ -66,6 +67,7 @@ export default function Home() {
             </div>
             <About />
           </main>
+          <Footer />
         </>
       </Dropzone>
     </>
