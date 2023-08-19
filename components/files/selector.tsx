@@ -15,6 +15,7 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
   return (
     <div>
       <TextField
+        aria-label="Search for a format"
         type="text"
         placeholder="Search"
         value={search}
