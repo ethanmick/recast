@@ -48,17 +48,35 @@ enum ConversionStatus {
 }
 
 model Conversion {
-  id          String           @id @default(dbgenerated("concat('cnv_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  s3Key       String
-  fromMime    String
-  toMime      String
-  currentMime String
-  status      ConversionStatus
-  error       String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  tenantId    String?
-  tenant      Tenant?          @relation(fields: [tenantId], references: [id])
-  userId      String?
-  user        User?            @relation(fields: [userId], references: [id])
+  id           String           @id @default(dbgenerated("concat('cnv_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  status       ConversionStatus
+  currentStage Int
+  error        String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  tenantId     String?
+  tenant       Tenant?          @relation(fields: [tenantId], references: [id])
+  userId       String?
+  user         User?            @relation(fields: [userId], references: [id])
+  stages       Stage[]
+}
+
+model Stage {
+  id           String     @id @default(dbgenerated("concat('stg_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  mime         String
+  order        Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  artifacts    Artifact[]
+  conversion   Conversion @relation(fields: [conversionId], references: [id])
+  conversionId String     @db.Text
+}
+
+model Artifact {
+  id        String   @id @default(dbgenerated("concat('art_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stage     Stage    @relation(fields: [stageId], references: [id])
+  stageId   String   @db.Text
 }

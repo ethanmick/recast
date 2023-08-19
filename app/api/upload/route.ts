@@ -1,9 +1,8 @@
 import { fileExtensionToMime } from '@/lib/file'
 import { prisma } from '@/lib/prisma'
-import { s3 } from '@/lib/s3'
+import { key, s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
 import { Buffer } from 'buffer'
-import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 const bucket = process.env.S3_BUCKET_NAME!
@@ -29,28 +28,47 @@ export async function POST(req: NextRequest) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 
-  // upload the file to S3
-  const key = `${randomUUID()}${randomUUID()}`.replace(/-/g, '')
+  const conversion = await prisma.conversion.create({
+    data: {
+      currentStage: 0,
+      status: ConversionStatus.PENDING,
+      stages: {
+        create: [
+          {
+            mime: from,
+            order: 0,
+            artifacts: {
+              create: [
+                {
+                  order: 0,
+                },
+              ],
+            },
+          },
+          {
+            mime: to,
+            order: 1,
+          },
+        ],
+      },
+    },
+    include: {
+      stages: {
+        include: {
+          artifacts: true,
+        },
+      },
+    },
+  })
 
   const params = {
     Bucket: bucket,
-    Key: key,
+    Key: key(conversion, 0, conversion.stages[0].artifacts[0]),
     Body: buffer,
   }
 
   await s3.putObject(params)
   console.log(`File uploaded successfully.`)
-
-  // save the metadata to Postgres
-  const conversion = await prisma.conversion.create({
-    data: {
-      s3Key: key,
-      fromMime: from,
-      toMime: to,
-      currentMime: from,
-      status: ConversionStatus.PENDING,
-    },
-  })
 
   return NextResponse.json({ id: conversion.id })
 }
