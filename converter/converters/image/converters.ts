@@ -7,7 +7,7 @@ import { Converter } from '../def'
 import { formats } from './formats'
 const exec = promisify(execAsync)
 
-const buildConverter = (
+export const buildConverter = (
   from: string,
   to: string,
   params?: string
