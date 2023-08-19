@@ -133,7 +133,7 @@ export const ConversionListItem = ({
       )}
       {conversion.status != UXConversionStatus.Complete && (
         <div className="flex justify-end items-center">
-          <Button variant="icon" onClick={onRemove}>
+          <Button variant="icon" onPress={onRemove}>
             <XIcon className="w-4 h-4" />
           </Button>
         </div>

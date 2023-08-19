@@ -6,7 +6,7 @@ import Button from '@/components/ui/button'
 export const OpenButton = () => {
   const { open } = useDropzone()
   return (
-    <Button className="bg-emerald-500" size="large" onClick={open}>
+    <Button className="bg-emerald-500" size="large" onPress={open}>
       Select a file to convert
     </Button>
   )
