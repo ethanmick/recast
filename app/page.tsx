@@ -24,34 +24,133 @@ const Hero = ({}: HeroProps) => (
   </section>
 )
 
-const About = () => (
-  <section className={container('flex-col flex gap-[30rem]')}>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet nulla
-      a dui pharetra, nec viverra nisl sollicitudin. Fusce ac orci non nunc
-      tristique tincidunt. Etiam euismod, felis eu gravida sollicitudin, erat
-      est dictum lectus, id iaculis justo enim nec erat. Nunc nec bibendum nunc.
-      Proin sed nisi quis augue tincidunt scelerisque eu a quam. Vestibulum quis
-      neque eget felis suscipit pellentesque non non dui.
-    </p>
-    <p>
-      Vivamus et neque eu dui facilisis dapibus. Nullam bibendum id libero at
-      bibendum. Mauris a ligula nec turpis tincidunt vestibulum. Phasellus id
-      metus dolor. Maecenas vel neque ut nisi porttitor scelerisque. Mauris in
-      felis vel nisl laoreet egestas nec at ligula. Sed sed eros quis enim
-      varius fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et
-      ultrices posuere cubilia curae; Proin sagittis erat in nisl aliquet, sit
-      amet iaculis purus bibendum.
-    </p>
-    <p>
-      Cras sed sem sed diam ullamcorper commodo a nec erat. In hac habitasse
-      platea dictumst. Sed sit amet mollis tortor. Vivamus in tellus a sapien
-      fermentum auctor id quis justo. Sed in quam vel ex congue faucibus sit
-      amet non dui. Proin mollis neque nec diam malesuada, et condimentum libero
-      ultrices. Morbi eu orci vel lectus facilisis pellentesque.
-    </p>
-  </section>
-)
+const WhyRecast = () => {
+  return (
+    <section className="bg-white p-8 rounded shadow-lg max-w-5xl mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        Why Choose Recast?
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Seamless Conversions</h3>
+          <p>
+            Convert any file format without the hassle. Our cutting-edge
+            technology ensures your conversions are efficient, accurate, and
+            fast. No more glitches or compatibility issues.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">
+            Supports Multiple File Types
+          </h3>
+          <p>
+            From documents to videos, images to audio, and everything in between
+            - Recast supports a wide range of file formats. We've got your back,
+            no matter what you need converting.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Safe & Secure</h3>
+          <p>
+            Your files are important to you, and their privacy is paramount to
+            us. With end-to-end encryption, rest assured your files are in safe
+            hands. We never store your data or share it.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const HowItWorks = () => {
+  return (
+    <section className="bg-gray-100 p-8 rounded shadow-lg max-w-5xl mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">How It Works</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">1. Upload Your File</h3>
+          <p>
+            Drag and drop your file or click to upload. Recast supports large
+            files to ensure you're never left hanging.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">
+            2. Choose Your Desired Format
+          </h3>
+          <p>
+            Select from a list of popular formats or search for the one you
+            need. Can't find it? Let us know, and we'll add it!
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">3. Click Convert</h3>
+          <p>
+            Sit back and relax as Recast works its magic. Your file will be
+            ready in moments.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">4. Download & Enjoy</h3>
+          <p>
+            Once converted, download your file instantly. Need multiple
+            conversions? We support batch processing, too.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const KeyFeatures = () => {
+  return (
+    <section className="bg-white p-8 rounded shadow-lg max-w-5xl mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">Key Features</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Batch Conversions</h3>
+          <p>
+            Save time by converting multiple files simultaneously. Recast
+            handles bulk conversions with ease.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Cloud-Based Platform</h3>
+          <p>
+            No need to download hefty software. Recast operates entirely in the
+            cloud, ensuring quick conversions without slowing down your device.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">24/7 Customer Support</h3>
+          <p>
+            Run into an issue or have a question? Our dedicated support team is
+            here round the clock to assist you.
+          </p>
+        </div>
+
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Regular Updates</h3>
+          <p>
+            As technology evolves, so does Recast. We're continually updating to
+            support newer formats and provide you with the best conversion
+            experience.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function Home() {
   return (
@@ -65,7 +164,9 @@ export default function Home() {
             <div className={container()}>
               <Manager />
             </div>
-            <About />
+            <WhyRecast />
+            <HowItWorks />
+            <KeyFeatures />
           </main>
           <Footer />
         </>
