@@ -7,9 +7,9 @@ export default async function TermsPage() {
         <h2>1. Acceptance of Terms</h2>
         <p>
           By accessing or using the Recast File Conversion Service (hereinafter
-          "Service"), you agree to comply with and be bound by these Terms of
-          Service (ToS). If you do not agree to these ToS, please do not use the
-          Service.
+          &quot;Service&quot;), you agree to comply with and be bound by these
+          Terms of Service (ToS). If you do not agree to these ToS, please do
+          not use the Service.
         </p>
       </section>
 
@@ -119,10 +119,10 @@ export default async function TermsPage() {
       <section>
         <h2>11. Disclaimer</h2>
         <p>
-          The Service is provided "AS IS" without any warranties, expressed or
-          implied, including the accuracy or completeness of conversions, the
-          continued availability of any specific format support, or the
-          uninterrupted or error-free operation of the Service.
+          The Service is provided &quot;AS IS&quot; without any warranties,
+          expressed or implied, including the accuracy or completeness of
+          conversions, the continued availability of any specific format
+          support, or the uninterrupted or error-free operation of the Service.
         </p>
       </section>
 
