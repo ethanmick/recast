@@ -47,8 +47,8 @@ const WhyRecast = () => {
           </h3>
           <p>
             From documents to videos, images to audio, and everything in between
-            - Recast supports a wide range of file formats. We've got your back,
-            no matter what you need converting.
+            - Recast supports a wide range of file formats. We&apos;ve got your
+            back, no matter what you need converting.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ const HowItWorks = () => {
           <h3 className="text-xl font-semibold mb-4">1. Upload Your File</h3>
           <p>
             Drag and drop your file or click to upload. Recast supports large
-            files to ensure you're never left hanging.
+            files to ensure you&apos;re never left hanging.
           </p>
         </div>
 
@@ -85,7 +85,7 @@ const HowItWorks = () => {
           </h3>
           <p>
             Select from a list of popular formats or search for the one you
-            need. Can't find it? Let us know, and we'll add it!
+            need. Can&apos;t find it? Let us know, and we&apos;ll add it!
           </p>
         </div>
 
@@ -142,9 +142,9 @@ const KeyFeatures = () => {
         <div className="text-center">
           <h3 className="text-xl font-semibold mb-4">Regular Updates</h3>
           <p>
-            As technology evolves, so does Recast. We're continually updating to
-            support newer formats and provide you with the best conversion
-            experience.
+            As technology evolves, so does Recast. We&apos;re continually
+            updating to support newer formats and provide you with the best
+            conversion experience.
           </p>
         </div>
       </div>
