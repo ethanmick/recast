@@ -6,8 +6,8 @@ export default async function About() {
         <p className="mb-6">
           Welcome to Recast, the digital chameleon of the software world. Born
           from a passion for seamless integration and a vision to abolish the
-          boundaries between file formats, we're here to transform the way you
-          view, use, and manage your files.
+          boundaries between file formats, we&apos;re here to transform the way
+          you view, use, and manage your files.
         </p>
 
         <h1 className="text-2xl font-bold mb-4">What We Do:</h1>
@@ -49,7 +49,7 @@ export default async function About() {
 
         <h1 className="text-2xl font-bold mb-4">Who We Serve:</h1>
         <p className="mb-6">
-          Whether you're a student trying to manage academic files, a
+          Whether you&apos;re a student trying to manage academic files, a
           professional juggling between tools, a creative navigating various
           software, or an enterprise with a need for bulk conversions, Recast is
           designed for you.
@@ -57,13 +57,13 @@ export default async function About() {
 
         <h1 className="text-2xl font-bold mb-4">Join the Evolution:</h1>
         <p className="mb-6">
-          Don't be held back by file incompatibilities. Dive into the world
+          Don&apos;t be held back by file incompatibilities. Dive into the world
           where conversions are effortless, quick, and secure. Let Recast
           redefine the way you interact with your files.
         </p>
 
         <p className="font-semibold text-xl">
-          Discover the magic of seamless conversion.{' '}
+          Discover the magic of seamless conversion.&apos;{' '}
           <span className="text-blue-500 underline">
             Recast your world today!
           </span>
