@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { container } from '@/lib/utils'
 
@@ -6,6 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Header />
       <main className={container()}>{children}</main>
+      <Footer />
     </>
   )
 }
