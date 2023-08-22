@@ -50,24 +50,35 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
       zlib: { level: 9 }, // Sets the compression level
     })
 
+    archive.on('warning', function (err) {
+      console.warn('Warning', err)
+    })
+
+    // good practice to catch this error explicitly
+    archive.on('error', function (err) {
+      console.error('Warning', err)
+    })
+
     for (const artifact of last.artifacts) {
       const downloadParams = {
         Bucket: bucket,
-        Key: key(conversion, 1, artifact),
+        Key: key(conversion, conversion.stages.length - 1, artifact),
       }
 
-      const stream = (
+      const stream = await (
         await s3.getObject(downloadParams)
-      ).Body?.transformToWebStream()
+      ).Body?.transformToByteArray()
       if (!stream) {
         throw new Error('Could not get stream')
       }
 
-      archive.append(stream as any, {
+      const buffer = Buffer.from(stream)
+      archive.append(buffer, {
         name: `${artifact.id}.${mimeToFileExtension(last.mime)}`,
       })
     }
 
+    archive.finalize()
     return new NextResponse(archive as any, {
       headers: {
         'Content-Type': 'application/zip',

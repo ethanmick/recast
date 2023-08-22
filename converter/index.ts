@@ -53,20 +53,23 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
       output = await edge.converter.convert([Buffer.from(converted)])
     }
 
-    const artifact = await prisma.artifact.create({
-      data: {
-        order: 0,
-        stageId: next.id,
-      },
-    })
-
-    console.log(`Uploading to`, artifact.id)
-    const uploadParams = {
-      Bucket: bucket,
-      Key: key(c, 1, artifact),
-      Body: output[0],
+    for (let i = 0; i < output.length; i++) {
+      const buffer = output[i]
+      const artifact = await prisma.artifact.create({
+        data: {
+          order: i,
+          stageId: next.id,
+        },
+      })
+      console.log(`Saved`, artifact.id)
+      const uploadParams = {
+        Bucket: bucket,
+        Key: key(c, 1, artifact),
+        Body: buffer,
+      }
+      await s3.putObject(uploadParams)
     }
-    await s3.putObject(uploadParams)
+
     await prisma.conversion.update({
       where: {
         id: c.id,
