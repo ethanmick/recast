@@ -6,9 +6,9 @@ import { join } from 'path'
 import { promisify } from 'util'
 import { mimeToFileExtension } from '../../../lib/file'
 import { Converter, MimeNode } from '../../types'
+import { nodes } from './nodes'
 const exec = promisify(execAsync)
 
-const _nodes: MimeNode[] = []
 const _converters: Array<Converter> = []
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -111,33 +111,6 @@ export class ImageMagickConverter extends Converter {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-// JPEG, JPG
-const IMAGE_JPEG: MimeNode = {
-  mime: 'image/jpeg',
-}
-_nodes.push(IMAGE_JPEG)
-
-// PNG
-const IMAGE_PNG: MimeNode = {
-  mime: 'image/png',
-}
-_nodes.push(IMAGE_PNG)
-
-// GIF
-const IMAGE_GIF: MimeNode = {
-  mime: 'image/gif',
-}
-_nodes.push(IMAGE_GIF)
-
-// ICO
-const IMAGE_X_ICON: MimeNode = {
-  mime: 'image/x-icon',
-  options: {
-    outputs: '-resize 256x256',
-  },
-}
-_nodes.push(IMAGE_X_ICON)
-
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,7 +130,7 @@ export class PdfToConverter extends ImageMagickConverter {
   }
 }
 
-for (const to of _nodes) {
+for (const to of nodes) {
   _converters.push(new PdfToConverter(to))
 }
 
@@ -165,11 +138,10 @@ for (const to of _nodes) {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-for (const from of _nodes) {
-  for (const to of _nodes) {
+for (const from of nodes) {
+  for (const to of nodes) {
     _converters.push(new ImageMagickConverter(from, to))
   }
 }
 
 export const converters = _converters
-export const nodes = _nodes

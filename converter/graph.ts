@@ -1,7 +1,5 @@
-import {
-  converters as ImageConverters,
-  nodes as ImageNodes,
-} from './converters/image/converters'
+import { converters as ImageConverters } from './converters/image'
+import { nodes as ImageNodes } from './converters/image/nodes'
 import { Converter, MimeNode } from './types'
 
 const converters: Converter[] = [...ImageConverters]

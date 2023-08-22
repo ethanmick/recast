@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
+import { ImageMagickConverter, PdfToConverter } from '.'
 import { Converter } from '../../types'
-import { ImageMagickConverter, PdfToConverter } from './converters'
 
 describe('JPG to PNG Converter', () => {
   let converter: Converter

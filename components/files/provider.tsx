@@ -1,6 +1,5 @@
 'use client'
 
-import { Format } from '@/lib/types'
 import axios from 'axios'
 import {
   Dispatch,
@@ -23,7 +22,7 @@ export enum UXConversionStatus {
 export type Conversion = {
   id?: string
   file: File
-  to?: Format
+  to?: { mime: string }
   status: UXConversionStatus
   upload?: number
   error?: any
