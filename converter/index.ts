@@ -19,6 +19,8 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
       Key: key(c, 0, c.stages[0].artifacts[0]),
     }
 
+    console.log('Downloading TEst', downloadParams)
+
     const [current, next] = c.stages
     console.log(`Downloading File`, downloadParams.Key)
     const res = await s3.getObject(downloadParams)
@@ -79,6 +81,7 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
       },
     })
   } catch (err: any) {
+    console.error(`Error converting`, err?.message)
     await prisma.conversion.update({
       where: {
         id: c.id,

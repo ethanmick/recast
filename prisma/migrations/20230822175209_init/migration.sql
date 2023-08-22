@@ -2,7 +2,7 @@
 CREATE TYPE "Plan" AS ENUM ('FREE', 'PRO');
 
 -- CreateEnum
-CREATE TYPE "ConversionStatus" AS ENUM ('PENDING', 'PROCESSING', 'DONE', 'ERROR');
+CREATE TYPE "ConversionStatus" AS ENUM ('UPLOADING', 'PENDING', 'PROCESSING', 'DONE', 'ERROR');
 
 -- CreateTable
 CREATE TABLE "Tenant" (

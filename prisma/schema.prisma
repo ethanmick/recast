@@ -41,6 +41,7 @@ model User {
 }
 
 enum ConversionStatus {
+  UPLOADING
   PENDING
   PROCESSING
   DONE

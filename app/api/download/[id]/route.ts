@@ -3,7 +3,6 @@ import { prisma } from '@/lib/prisma'
 import { key, s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
 import archiver from 'archiver'
-import { extension } from 'mime-types'
 import { NextRequest, NextResponse } from 'next/server'
 
 const bucket = process.env.S3_BUCKET_NAME!
@@ -100,7 +99,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
   return new NextResponse(stream as any, {
     headers: {
       'Content-Type': conversion.stages[1].mime,
-      'Content-Disposition': `attachment; filename=download.${extension(
+      'Content-Disposition': `attachment; filename=download.${mimeToFileExtension(
         conversion.stages[1].mime
       )}`,
     },

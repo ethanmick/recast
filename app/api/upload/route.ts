@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   const conversion = await prisma.conversion.create({
     data: {
       currentStage: 0,
-      status: ConversionStatus.PENDING,
+      status: ConversionStatus.UPLOADING,
       stages: {
         create: [
           {
@@ -69,6 +69,15 @@ export async function POST(req: NextRequest) {
 
   await s3.putObject(params)
   console.log(`File uploaded successfully.`, params.Key)
+
+  await prisma.conversion.update({
+    where: {
+      id: conversion.id,
+    },
+    data: {
+      status: ConversionStatus.PENDING,
+    },
+  })
 
   return NextResponse.json({ id: conversion.id })
 }

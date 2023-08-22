@@ -4,17 +4,13 @@ import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { promisify } from 'util'
 import { mimeToFileExtension } from '../../../lib/file'
-import { Converter, MimeNode } from '../../types'
+import { Converter } from '../../types'
 import { nodes } from './nodes'
 const exec = promisify(execAsync)
 
 const _converters: Array<Converter> = []
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-export class ImageMagickConverter extends Converter {
+export class FFmpegConverter extends Converter {
   get from(): string {
     return this.fromNode.mime
   }
@@ -31,7 +27,7 @@ export class ImageMagickConverter extends Converter {
   }
 
   public inputOptions(): string {
-    return this.fromNode.options?.inputs ?? ''
+    return `${this.fromNode.options?.inputs ?? ''} -i`
   }
 
   public output(): string {
@@ -78,10 +74,10 @@ export class ImageMagickConverter extends Converter {
   async execute() {
     console.log(
       'Executing',
-      `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
+      `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
     )
     await exec(
-      `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
+      `ffmpeg ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
       {
         cwd: this.cwd,
       }
@@ -106,42 +102,9 @@ export class ImageMagickConverter extends Converter {
   async postRead() {}
 }
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-export class PdfToConverter extends ImageMagickConverter {
-  override get from() {
-    return 'application/pdf'
-  }
-
-  constructor(to: MimeNode) {
-    super({ mime: 'application/pdf' }, to)
-  }
-
-  override output() {
-    const ext = mimeToFileExtension(this.to)
-    return `output.${ext}`
-  }
-}
-
-for (const to of nodes) {
-  if (to.mime === 'application/pdf') {
-    continue
-  }
-  _converters.push(new PdfToConverter(to))
-}
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 for (const from of nodes) {
   for (const to of nodes) {
-    if (from.mime === 'application/pdf') {
-      continue
-    }
-    _converters.push(new ImageMagickConverter(from, to))
+    _converters.push(new FFmpegConverter(from, to))
   }
 }
 
