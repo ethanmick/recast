@@ -22,7 +22,9 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
     const [current, next] = c.stages
     console.log(`Downloading File`, downloadParams.Key)
     const res = await s3.getObject(downloadParams)
-    console.log(`Starting conversion: ${current.mime} => ${next.mime}`)
+    console.log(
+      `Downloaded. Looking up conversion: ${current.mime} => ${next.mime}`
+    )
 
     const converters = findPath(current.mime, next.mime)
     if (!converters) {

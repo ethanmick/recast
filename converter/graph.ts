@@ -20,6 +20,7 @@ for (const node of ImageNodes) {
 }
 
 for (const converter of converters) {
+  console.log('Converter', converter.from, '->', converter.to)
   const from = nodes[converter.from]
   const to = nodes[converter.to]
   from.edges.push({ converter, from, to })

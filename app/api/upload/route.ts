@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
   }
 
   await s3.putObject(params)
-  console.log(`File uploaded successfully.`)
+  console.log(`File uploaded successfully.`, params.Key)
 
   return NextResponse.json({ id: conversion.id })
 }

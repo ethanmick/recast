@@ -10,7 +10,6 @@ const schema = z.array(
   z.object({
     to: z.object({
       mime: z.string(),
-      ext: z.string(),
     }),
   })
 )

@@ -111,10 +111,6 @@ export class ImageMagickConverter extends Converter {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 export class PdfToConverter extends ImageMagickConverter {
   override get from() {
     return 'application/pdf'
@@ -131,6 +127,9 @@ export class PdfToConverter extends ImageMagickConverter {
 }
 
 for (const to of nodes) {
+  if (to.mime === 'application/pdf') {
+    continue
+  }
   _converters.push(new PdfToConverter(to))
 }
 
@@ -140,6 +139,9 @@ for (const to of nodes) {
 
 for (const from of nodes) {
   for (const to of nodes) {
+    if (from.mime === 'application/pdf') {
+      continue
+    }
     _converters.push(new ImageMagickConverter(from, to))
   }
 }

@@ -29,4 +29,10 @@ const IMAGE_X_ICON: MimeNode = {
 }
 nodes.push(IMAGE_X_ICON)
 
+// PDF
+const APPLICATION_PDF: MimeNode = {
+  mime: 'application/pdf',
+}
+nodes.push(APPLICATION_PDF)
+
 export { nodes }
