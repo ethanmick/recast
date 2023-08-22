@@ -1,5 +1,5 @@
 import { formats } from '@/converter/converters/formats'
-import { Format } from '@/lib/types'
+import { mimeToFileExtension } from '@/lib/file'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import Button from '../ui/button'
@@ -7,7 +7,7 @@ import TextField from '../ui/text-field'
 
 type SelectorProps = {
   value: string
-  setValue: (format: Format) => void
+  setValue: (format: { mime: string }) => void
 }
 
 export const Selector = ({ value, setValue }: SelectorProps) => {
@@ -28,7 +28,8 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
           {formats
             .filter(
               (format) =>
-                format.ext.includes(search) || format.mime.includes(search)
+                mimeToFileExtension(format.mime).includes(search) ||
+                format.mime.includes(search)
             )
             .map((format) => (
               <li key={format.mime}>
@@ -40,7 +41,7 @@ export const Selector = ({ value, setValue }: SelectorProps) => {
                   size="small"
                   onPress={() => setValue(format)}
                 >
-                  {format.ext}
+                  {mimeToFileExtension(format.mime)}
                 </Button>
               </li>
             ))}

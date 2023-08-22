@@ -1,3 +1,3 @@
-import { formats as imageFormats } from './image/formats'
+import { nodes as ImageNodes } from './image/converters'
 
-export const formats = [...imageFormats]
+export const formats = [...ImageNodes]
