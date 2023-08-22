@@ -49,14 +49,14 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
     if (!converted) {
       throw new Error('Could not download file')
     }
-    let output: Buffer[] = []
+    let outputs: Buffer[] = [Buffer.from(converted)]
     for (const edge of converters) {
       console.log(`Converting to ${edge.to.mime}`)
-      output = await edge.converter.convert([Buffer.from(converted)])
+      outputs = await edge.converter.convert(outputs)
     }
 
-    for (let i = 0; i < output.length; i++) {
-      const buffer = output[i]
+    for (let i = 0; i < outputs.length; i++) {
+      const buffer = outputs[i]
       const artifact = await prisma.artifact.create({
         data: {
           order: i,
