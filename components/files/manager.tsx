@@ -29,7 +29,6 @@ export const Manager = () => {
       }
       return
     }
-    console.log('Convert')
     convert()
   }
 
@@ -76,9 +75,11 @@ export const Manager = () => {
                 validate()
               }}
               type="submit"
-              disabled={conversions.some(
-                (conversion) => conversion.status != UXConversionStatus.Pending
-              )}
+              disabled={
+                conversions.filter(
+                  (c) => c.status == UXConversionStatus.Pending
+                ).length == 0
+              }
             >
               Convert
             </Button>

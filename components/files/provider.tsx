@@ -81,6 +81,7 @@ export const ConversionProvider = ({ children }: Props) => {
   const convert = async () => {
     for (let i = 0; i < conversions.length; i++) {
       const c = conversions[i]
+      if (c.status !== UXConversionStatus.Pending) continue
       updateConversion(i, { status: UXConversionStatus.Uploading })
       try {
         const formData = new FormData()
