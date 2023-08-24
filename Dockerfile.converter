@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 RUN apt update \
     && apt install -y build-essential libjpeg-dev libpng-dev libtiff-dev potrace imagemagick ffmpeg pandoc \
+    && apt install -y libreoffice \
     && npm install -g pnpm
 
 COPY pnpm-lock.yaml package.json ./
