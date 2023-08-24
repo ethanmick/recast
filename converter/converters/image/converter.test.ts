@@ -33,7 +33,11 @@ describe('JPG to PNG Converter', () => {
     'image/vnd.adobe.photoshop',
     'image/webp',
   ])(`image/jpg => %s`, async (mime: any) => {
-    const converter = new ImageMagickConverter({ mime: 'image/jpeg' }, { mime })
+    const converter = new ImageMagickConverter(
+      { mime: 'image/jpeg' },
+      { mime },
+      { dir: process.env.TEST_DIR }
+    )
     converter.log = noop
     const [result] = await converter.convert([buffer])
     expect(result).toBeDefined()
