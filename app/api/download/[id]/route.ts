@@ -1,4 +1,4 @@
-import { mimeToFileExtension } from '@/lib/file'
+import { mimeToFileExtension } from '@/converter/converters/mime'
 import { prisma } from '@/lib/prisma'
 import { key, s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'

@@ -1,0 +1,47 @@
+{
+  "image/bmp": {
+    "extensions": ["bmp"]
+  },
+  "image/gif": {
+    "extensions": ["gif"]
+  },
+  "image/heic": {
+    "extensions": ["heic"]
+  },
+  "image/heif": {
+    "extensions": ["heif"]
+  },
+  "image/jp2": {
+    "extensions": ["jp2"]
+  },
+  "image/jpeg": {
+    "extensions": ["jpeg", "jpg"]
+  },
+  "image/jpm": {
+    "extensions": ["jpm"]
+  },
+  "image/jpx": {
+    "extensions": ["jpx"]
+  },
+  "image/jxl": {
+    "extensions": ["jxl"]
+  },
+  "image/png": {
+    "extensions": ["png"]
+  },
+  "image/svg+xml": {
+    "extensions": ["svg"]
+  },
+  "image/tiff": {
+    "extensions": ["tiff", "tif"]
+  },
+  "image/vnd.adobe.photoshop": {
+    "extensions": ["psd"]
+  },
+  "image/webp": {
+    "extensions": ["webp"]
+  },
+  "image/x-icon": {
+    "extensions": ["ico"]
+  }
+}

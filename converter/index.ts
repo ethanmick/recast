@@ -1,7 +1,9 @@
 import { Artifact, Conversion, ConversionStatus, Stage } from '@prisma/client'
 import { prisma } from '../lib/prisma'
 import { key, s3 } from '../lib/s3'
-import { findPath } from './graph'
+import { create } from './converters/graph'
+import { isMime } from './converters/mime'
+// import { findPath } from './graph'
 
 const bucket = process.env.S3_BUCKET_NAME!
 
@@ -10,6 +12,8 @@ type ConversionWithStagesWithArtifacts = Conversion & {
     artifacts: Artifact[]
   })[]
 }
+
+const graph = create()
 
 const convert = async (c: ConversionWithStagesWithArtifacts) => {
   console.log(`Starting conversion ${c.id}`)
@@ -28,7 +32,17 @@ const convert = async (c: ConversionWithStagesWithArtifacts) => {
       `Downloaded. Looking up conversion: ${current.mime} => ${next.mime}`
     )
 
-    const converters = findPath(current.mime, next.mime)
+    const from = current.mime
+    if (!isMime(from)) {
+      throw new Error(`Invalid from mime type ${from}`)
+    }
+
+    const to = next.mime
+    if (!isMime(to)) {
+      throw new Error(`Invalid to mime type ${to}`)
+    }
+
+    const converters = graph.findPath(from, to)
     if (!converters) {
       console.error(
         `Could not find converter from ${current.mime} to ${next.mime}`

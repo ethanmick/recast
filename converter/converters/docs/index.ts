@@ -3,18 +3,15 @@ import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { promisify } from 'util'
-import { mimeToFileExtension } from '../../../lib/file'
-import { Converter } from '../../types'
-import { nodes } from './nodes'
+import { mimeToFileExtension } from '../mime'
+import { Converter, Mime } from '../types'
 const exec = promisify(execAsync)
 
-const _converters: Array<Converter> = []
-
 export class PandocConverter extends Converter {
-  get from(): string {
+  get from(): Mime {
     return this.fromNode.mime
   }
-  get to(): string {
+  get to(): Mime {
     return this.toNode.mime
   }
 
@@ -103,10 +100,10 @@ export class PandocConverter extends Converter {
 //
 
 export class PDF2DocXConverter extends Converter {
-  get from(): string {
+  get from(): Mime {
     return this.fromNode.mime
   }
-  get to(): string {
+  get to(): Mime {
     return this.toNode.mime
   }
 
@@ -191,18 +188,3 @@ export class PDF2DocXConverter extends Converter {
 
   async postRead() {}
 }
-
-//
-
-for (const from of nodes) {
-  for (const to of nodes) {
-    if (from.mime === 'application/pdf') {
-      continue
-    }
-    _converters.push(new PandocConverter(from, to))
-  }
-}
-
-_converters.push(new PDF2DocXConverter(nodes[2], nodes[3]))
-
-export const converters = _converters
