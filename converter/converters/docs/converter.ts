@@ -1,6 +1,7 @@
 import { exec as execAsync } from 'child_process'
 import { promisify } from 'util'
 import { ExecutionConverter } from '../converter'
+import { mimeToFileExtension } from '../mime'
 const exec = promisify(execAsync)
 
 export class PandocConverter extends ExecutionConverter {
@@ -39,16 +40,14 @@ export class PDF2DocXConverter extends ExecutionConverter {
 }
 
 export class LibreOfficeConverter extends ExecutionConverter {
+  override outputOptions() {
+    const options = super.outputOptions()
+    return `${options} --convert-to ${mimeToFileExtension(this.toNode.mime)}`
+  }
+
   async execute() {
-    console.log(
-      'Executing',
-      `libreoffice --headless ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
-    )
-    await exec(
-      `libreoffice --headless ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`,
-      {
-        cwd: this.cwd,
-      }
-    )
+    const cmd = `libreoffice --headless --invisible ${this.inputOptions()} ${this.outputOptions()} ${this.input()}`
+    console.log('Executing', cmd)
+    await exec(cmd, { cwd: this.cwd })
   }
 }
