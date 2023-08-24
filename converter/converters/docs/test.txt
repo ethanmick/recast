@@ -1,0 +1,62 @@
+==============================
+       PLAIN TEXT DOCUMENT
+==============================
+
+Title: Sample Formatting in Plain Text
+
+1. Headers and Subheaders:
+==============================
+Main Header
+------------------------------
+Subheader 1
+------------------------------
+Subheader 2
+
+2. Lists:
+* Bullet point 1
+* Bullet point 2
+    - Sub-bullet 1
+    - Sub-bullet 2
+        + Sub-sub-bullet
+
+3. Numbered Lists:
+1) Point 1
+2) Point 2
+    a) Subpoint a
+    b) Subpoint b
+
+4. Emphasis:
+*This is an attempt to italicize.*
+_This is another attempt._
+!Important Note!
+
+5. Links (Plain Text Version):
+Visit OpenAI at: http://www.openai.com
+
+6. Quotes and Citations:
+> "This is a block quote. Block quotes are used to cite external content or highlight a passage." - Source Unknown
+
+7. Code Blocks:
+
+```c
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
+
+8. Tables (Simulated in Plain Text):
+
+| Name     | Age | Occupation  |
+|----------|-----|-------------|
+| Alice    | 30  | Engineer    |
+| Bob      | 45  | Photographer|
+
+9. Separation Lines:
+------------------------------
+
+10. Date and Timestamp:
+Date: 2023-08-24
+Time: 14:00
+
+End of Document.

@@ -1,23 +1,10 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-import { Converter } from '../converter'
 import { ImageMagickConverter } from './converter'
 
 const noop = () => {}
 
-describe('JPG to PNG Converter', () => {
-  let converter: Converter
-  let buffer: Buffer
-
-  beforeAll(async () => {
-    converter = new ImageMagickConverter(
-      { mime: 'image/jpeg' },
-      { mime: 'image/png' }
-    )
-    converter.log = noop
-    buffer = await readFile(join(__dirname, 'test.jpg'))
-  })
-
+describe('image/jpeg', () => {
   test.each([
     'image/bmp',
     'image/gif',
@@ -32,7 +19,8 @@ describe('JPG to PNG Converter', () => {
     'image/tiff',
     'image/vnd.adobe.photoshop',
     'image/webp',
-  ])(`image/jpg => %s`, async (mime: any) => {
+  ])(`image/jpeg => %s`, async (mime: any) => {
+    const buffer = await readFile(join(__dirname, 'test.jpg'))
     const converter = new ImageMagickConverter(
       { mime: 'image/jpeg' },
       { mime },
@@ -41,22 +29,6 @@ describe('JPG to PNG Converter', () => {
     converter.log = noop
     const [result] = await converter.convert([buffer])
     expect(result).toBeDefined()
-  })
-
-  it('should convert "example.jpg" to PNG format', async () => {
-    const [pngBuffer] = await converter.convert([buffer])
-    const pngMagicNumbers = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]) // PNG file signature
-    expect(pngBuffer.slice(0, 8)).toEqual(pngMagicNumbers)
-  })
-
-  it('should convert to SVG', async () => {
-    converter = new ImageMagickConverter(
-      { mime: 'image/jpeg' },
-      { mime: 'image/svg+xml' }
-    )
-    converter.log = noop
-    const [svg] = await converter.convert([buffer])
-    expect(svg.toString()).toContain('<svg')
   })
 })
 

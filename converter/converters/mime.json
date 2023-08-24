@@ -1,4 +1,10 @@
 {
+  "application/msword": {
+    "extensions": ["doc"]
+  },
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+    "extensions": ["docx"]
+  },
   "image/bmp": {
     "extensions": ["bmp"]
   },
@@ -43,5 +49,8 @@
   },
   "image/x-icon": {
     "extensions": ["ico"]
+  },
+  "text/plain": {
+    "extensions": ["txt"]
   }
 }
