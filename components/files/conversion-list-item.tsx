@@ -1,6 +1,7 @@
 'use client'
 
-import { bytesToSize, mimeToFileExtension } from '@/lib/file'
+import { mimeToFileExtension } from '@/converter/converters/mime'
+import { bytesToSize } from '@/lib/file'
 import { ConversionStatus } from '@prisma/client'
 import { XIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -96,7 +97,7 @@ export const ConversionListItem = ({
                     : 'Convert To'}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent>
+              <PopoverContent className="w-[400px]">
                 <Selector
                   value={conversion.to?.mime || ''}
                   setValue={onConvertTo}

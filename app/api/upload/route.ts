@@ -1,9 +1,10 @@
-import { fileExtensionToMime } from '@/lib/file'
+import { fileExtensionToMime } from '@/converter/converters/mime'
 import { prisma } from '@/lib/prisma'
 import { key, s3 } from '@/lib/s3'
 import { ConversionStatus } from '@prisma/client'
 import { Buffer } from 'buffer'
 import { NextRequest, NextResponse } from 'next/server'
+import { extname } from 'path'
 
 const bucket = process.env.S3_BUCKET_NAME!
 
@@ -11,7 +12,8 @@ export async function POST(req: NextRequest) {
   const data = await req.formData()
   const file: File | null = data.get('file') as unknown as File
   const to = data.get('to') as string
-  const from = fileExtensionToMime(file.name)
+  const ext = extname(file.name)
+  const from = fileExtensionToMime(ext)
 
   if (!file) {
     return new NextResponse(JSON.stringify({ error: 'No file found' }), {

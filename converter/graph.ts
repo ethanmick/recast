@@ -1,75 +1,75 @@
-import { converters as AudioConverters } from './converters/audio'
-import { nodes as AudioNodes } from './converters/audio/nodes'
-import { converters as DocumentConverter } from './converters/docs'
-import { nodes as DocumentNodes } from './converters/docs/nodes'
-import { converters as ImageConverters } from './converters/image'
-import { nodes as ImageNodes } from './converters/image/nodes'
-import { Converter, MimeNode } from './types'
+// import { converters as AudioConverters } from './converters/audio'
+// import { nodes as AudioNodes } from './converters/audio/nodes'
+// import { converters as DocumentConverter } from './converters/docs'
+// import { nodes as DocumentNodes } from './converters/docs/nodes'
+// import { converters as ImageConverters } from './converters/image'
+// import { nodes as ImageNodes } from './converters/image/nodes'
+// import { Converter, MimeNode } from './types'
 
-const converters: Converter[] = [
-  ...ImageConverters,
-  ...AudioConverters,
-  ...DocumentConverter,
-]
-const allNodes: MimeNode[] = [...ImageNodes, ...AudioNodes, ...DocumentNodes]
+// const converters: Converter[] = [
+//   ...ImageConverters,
+//   ...AudioConverters,
+//   ...DocumentConverter,
+// ]
+// const allNodes: MimeNode[] = [...ImageNodes, ...AudioNodes, ...DocumentNodes]
 
-type Edge = {
-  converter: Converter
-  from: GraphNode
-  to: GraphNode
-}
+// type Edge = {
+//   converter: Converter
+//   from: GraphNode
+//   to: GraphNode
+// }
 
-type GraphNode = MimeNode & {
-  edges: Edge[]
-}
+// type GraphNode = MimeNode & {
+//   edges: Edge[]
+// }
 
-const nodes: Record<string, GraphNode> = {}
-for (const node of allNodes) {
-  nodes[node.mime] = { ...node, edges: [] }
-}
+// const nodes: Record<string, GraphNode> = {}
+// for (const node of allNodes) {
+//   nodes[node.mime] = { ...node, edges: [] }
+// }
 
-for (const converter of converters) {
-  console.log('Converter', converter.from, '->', converter.to)
-  const from = nodes[converter.from]
-  const to = nodes[converter.to]
-  from.edges.push({ converter, from, to })
-}
+// for (const converter of converters) {
+//   console.log('Converter', converter.from, '->', converter.to)
+//   const from = nodes[converter.from]
+//   const to = nodes[converter.to]
+//   from.edges.push({ converter, from, to })
+// }
 
-console.log('Graph', nodes)
+// console.log('Graph', nodes)
 
-export { nodes }
+// export { nodes }
 
-export type Path = Edge[] | null
+// export type Path = Edge[] | null
 
-export function findPath(start: string, end: string) {
-  const visited: Record<string, boolean> = {}
-  const queue: { node: GraphNode; path: Edge[] }[] = []
+// export function findPath(start: string, end: string) {
+//   const visited: Record<string, boolean> = {}
+//   const queue: { node: GraphNode; path: Edge[] }[] = []
 
-  queue.push({ node: nodes[start], path: [] })
-  visited[start] = true
+//   queue.push({ node: nodes[start], path: [] })
+//   visited[start] = true
 
-  while (queue.length > 0) {
-    const current = queue.shift()
-    // console.log('Graph: Finding path from', current?.node.type)
-    if (!current) {
-      return null
-    }
+//   while (queue.length > 0) {
+//     const current = queue.shift()
+//     // console.log('Graph: Finding path from', current?.node.type)
+//     if (!current) {
+//       return null
+//     }
 
-    if (current.node.mime === end) {
-      return current.path
-    }
+//     if (current.node.mime === end) {
+//       return current.path
+//     }
 
-    for (const edge of current.node.edges) {
-      if (!visited[edge.to.mime]) {
-        queue.push({
-          node: edge.to,
-          path: [...current.path, edge],
-        })
+//     for (const edge of current.node.edges) {
+//       if (!visited[edge.to.mime]) {
+//         queue.push({
+//           node: edge.to,
+//           path: [...current.path, edge],
+//         })
 
-        visited[edge.to.mime] = true
-      }
-    }
-  }
+//         visited[edge.to.mime] = true
+//       }
+//     }
+//   }
 
-  return null
-}
+//   return null
+// }

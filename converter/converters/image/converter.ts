@@ -3,22 +3,15 @@ import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { promisify } from 'util'
-import { mimeToFileExtension } from '../../../lib/file'
-import { Converter, MimeNode } from '../../types'
-import { nodes } from './nodes'
+import { mimeToFileExtension } from '../mime'
+import { Converter, Mime } from '../types'
 const exec = promisify(execAsync)
 
-const _converters: Array<Converter> = []
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 export class ImageMagickConverter extends Converter {
-  get from(): string {
+  get from(): Mime {
     return this.fromNode.mime
   }
-  get to(): string {
+  get to(): Mime {
     return this.toNode.mime
   }
 
@@ -58,7 +51,7 @@ export class ImageMagickConverter extends Converter {
     const cwd = join('/tmp', randomUUID())
     await mkdir(cwd, { recursive: true })
     this.cwd = cwd
-    console.log('Conversion directory', cwd)
+    this.log('Conversion directory', cwd)
     return buffers
   }
 
@@ -76,7 +69,7 @@ export class ImageMagickConverter extends Converter {
   async preConvert() {}
 
   async execute() {
-    console.log(
+    this.log(
       'Executing',
       `convert ${this.inputOptions()} ${this.input()} ${this.outputOptions()} ${this.output()}`
     )
@@ -93,11 +86,9 @@ export class ImageMagickConverter extends Converter {
   async preRead() {}
 
   async read() {
-    console.log('Inputs', this.inputs)
     const outputs = (await readdir(this.cwd)).filter(
       (f) => !this.inputs.includes(f)
     )
-    console.log('Outputs', outputs)
     this.outputBuffers = await Promise.all(
       outputs.map((f) => readFile(`${this.cwd}/${f}`))
     )
@@ -110,39 +101,17 @@ export class ImageMagickConverter extends Converter {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-export class PdfToConverter extends ImageMagickConverter {
-  override get from() {
-    return 'application/pdf'
-  }
+// export class PdfToConverter extends ImageMagickConverter {
+//   override get from() {
+//     return 'application/pdf'
+//   }
 
-  constructor(to: MimeNode) {
-    super({ mime: 'application/pdf' }, to)
-  }
+//   constructor(to: MimeNode) {
+//     super({ mime: 'application/pdf' }, to)
+//   }
 
-  override output() {
-    const ext = mimeToFileExtension(this.to)
-    return `output.${ext}`
-  }
-}
-
-for (const to of nodes) {
-  if (to.mime === 'application/pdf') {
-    continue
-  }
-  _converters.push(new PdfToConverter(to))
-}
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-for (const from of nodes) {
-  for (const to of nodes) {
-    if (from.mime === 'application/pdf') {
-      continue
-    }
-    _converters.push(new ImageMagickConverter(from, to))
-  }
-}
-
-export const converters = _converters
+//   override output() {
+//     const ext = mimeToFileExtension(this.to)
+//     return `output.${ext}`
+//   }
+// }
