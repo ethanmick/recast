@@ -1,4 +1,5 @@
-import { Converter, Mime } from '../types'
+import { Converter } from '../converter'
+import { Mime } from '../types'
 import { ImageMagickConverter } from './converter'
 
 const edges: Array<Converter> = []

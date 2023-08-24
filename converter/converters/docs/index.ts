@@ -3,8 +3,9 @@ import { randomUUID } from 'crypto'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import { join } from 'path'
 import { promisify } from 'util'
+import { Converter } from '../converter'
 import { mimeToFileExtension } from '../mime'
-import { Converter, Mime } from '../types'
+import { Mime } from '../types'
 const exec = promisify(execAsync)
 
 export class PandocConverter extends Converter {

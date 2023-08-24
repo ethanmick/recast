@@ -1,6 +1,7 @@
+import { Converter } from './converter'
 import imageEdges from './image/edges'
 import { mimes } from './mime'
-import { Converter, Edge, Mime, Node } from './types'
+import { Edge, Mime, Node } from './types'
 
 export class Graph {
   private nodes: Partial<Record<Mime, Node>> = {}

@@ -1,3 +1,4 @@
+import { Converter } from './converter'
 import Types from './mime.json'
 
 export type MimeValue = {
@@ -21,15 +22,4 @@ export type Edge = {
   converter: Converter
   from: Node
   to: Node
-}
-
-export abstract class Converter {
-  abstract get from(): Mime
-  abstract get to(): Mime
-
-  constructor(readonly fromNode: Node, readonly toNode: Node) {}
-
-  abstract convert(buffers: Buffer[]): Promise<Buffer[]>
-
-  public log = (...args: any[]) => console.log(...args)
 }

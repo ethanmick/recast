@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-import { Converter } from '../types'
+import { Converter } from '../converter'
 import { ImageMagickConverter } from './converter'
 
 const noop = () => {}
