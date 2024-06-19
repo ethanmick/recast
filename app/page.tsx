@@ -7,7 +7,7 @@ export default function Home() {
       </h2>
       <a
         className="text-sky-500 underline"
-        href="https://github.com/ethanmick/time-tracker"
+        href="https://github.com/ethanmick/recast"
       >
         Code
       </a>
